@@ -9,7 +9,19 @@ const PlayfulHero = () => {
   const shapesRef = useRef([]);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 });
+    const tl = gsap.timeline({ delay: 0.3 });
+    
+    // Add parallax scroll effect
+    gsap.to(heroRef.current, {
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1
+      },
+      y: 100,
+      opacity: 0.5
+    });
 
     // Animate title with bouncy effect
     tl.from(titleRef.current.children, {
