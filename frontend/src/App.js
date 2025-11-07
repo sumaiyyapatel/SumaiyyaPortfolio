@@ -19,7 +19,7 @@ function App() {
     // Quick loading
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 600);
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
