@@ -87,7 +87,10 @@ const PlayfulHero = () => {
             <Star className="w-12 h-12 text-[#9D4EDD] animate-wiggle" />
           </div>
           
-          <h1 className="text-9xl md:text-[14rem] font-black leading-none text-white drop-shadow-2xl" style={{WebkitTextStroke: '2px #FF6B35'}}>
+          <h1 className="text-9xl md:text-[14rem] font-black leading-none drop-shadow-2xl" style={{
+            color: '#FFF',
+            textShadow: '4px 4px 0px #FF6B35, 8px 8px 0px rgba(0,0,0,0.2)'
+          }}>
             SUMAIYYA
           </h1>
           <h1 className="text-9xl md:text-[14rem] font-black leading-none text-black" style={{ 
