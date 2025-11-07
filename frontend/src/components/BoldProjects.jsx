@@ -31,8 +31,12 @@ const BoldProjects = () => {
   const colors = ['#FF6B35', '#00D4FF', '#9D4EDD', '#06FFA5'];
 
   return (
-    <div ref={sectionRef} className="min-h-screen bg-gradient-to-b from-[#00D4FF] to-[#9D4EDD] py-32 px-6">
-      <div className="max-w-7xl mx-auto">
+    <div ref={sectionRef} className="min-h-screen bg-gradient-to-b from-[#00D4FF] to-[#9D4EDD] py-32 px-6 relative overflow-hidden">
+      {/* Animated circles in background */}
+      <div className="absolute top-20 right-20 w-96 h-96 rounded-full border-8 border-white opacity-10 animate-pulse-scale"></div>
+      <div className="absolute bottom-40 left-20 w-72 h-72 rounded-full border-8 border-white opacity-10 animate-pulse-scale" style={{animationDelay: '1s'}}></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <h2 className="text-8xl md:text-[12rem] font-black text-white mb-20 leading-none text-center">
           MY WORK
         </h2>
