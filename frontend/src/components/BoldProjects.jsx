@@ -14,14 +14,14 @@ const BoldProjects = () => {
 
     projects.forEach((project, index) => {
       gsap.from(project, {
-        x: index % 2 === 0 ? -200 : 200,
+        x: index % 2 === 0 ? -100 : 100,
         opacity: 0,
-        rotation: index % 2 === 0 ? -10 : 10,
-        duration: 1,
-        ease: 'power3.out',
+        rotation: index % 2 === 0 ? -5 : 5,
+        duration: 0.7,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: project,
-          start: 'top 80%',
+          start: 'top 95%',
           toggleActions: 'play none none reverse'
         }
       });
