@@ -14,14 +14,16 @@ const InteractiveAbout = () => {
     const section = sectionRef.current;
 
     gsap.from(section.querySelectorAll('.animate-in'), {
-      y: 30,
-      opacity: 0.3,
-      duration: 0.5,
-      stagger: 0.08,
-      ease: 'power2.out',
+      y: 80,
+      scale: 0.9,
+      opacity: 0,
+      rotation: -5,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'back.out(1.5)',
       scrollTrigger: {
         trigger: section,
-        start: 'top 95%',
+        start: 'top 85%',
         toggleActions: 'play none none reverse'
       }
     });
