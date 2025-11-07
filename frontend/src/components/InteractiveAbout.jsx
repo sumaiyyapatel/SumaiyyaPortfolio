@@ -60,6 +60,12 @@ const InteractiveAbout = () => {
 
   return (
     <div ref={sectionRef} className="min-h-screen bg-white py-32 px-6 relative overflow-hidden">
+      {/* Dot pattern background */}
+      <div className="absolute inset-0 opacity-20" style={{
+        backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+        backgroundSize: '30px 30px'
+      }}></div>
+      
       {/* Big background text */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20rem] font-black text-gray-100 opacity-30 select-none whitespace-nowrap">
         ABOUT
