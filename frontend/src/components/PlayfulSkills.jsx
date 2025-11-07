@@ -14,14 +14,14 @@ const PlayfulSkills = () => {
     
     gsap.from(section.querySelectorAll('.skill-item'), {
       scale: 0,
-      rotation: 360,
+      rotation: 180,
       opacity: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'back.out(1.7)',
+      duration: 0.5,
+      stagger: 0.05,
+      ease: 'back.out(1.5)',
       scrollTrigger: {
         trigger: section,
-        start: 'top 70%',
+        start: 'top 95%',
         toggleActions: 'play none none reverse'
       }
     });
