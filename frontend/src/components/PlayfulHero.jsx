@@ -9,17 +9,17 @@ const PlayfulHero = () => {
   const shapesRef = useRef([]);
 
   useEffect(() => {
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({ delay: 0.2 });
 
     // Animate title with bouncy effect
     tl.from(titleRef.current.children, {
-      y: 100,
+      y: 60,
       opacity: 0,
-      scale: 0.5,
-      rotation: -10,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'elastic.out(1, 0.5)'
+      scale: 0.7,
+      rotation: -5,
+      duration: 0.7,
+      stagger: 0.08,
+      ease: 'elastic.out(1, 0.6)'
     });
 
     // Animate shapes
