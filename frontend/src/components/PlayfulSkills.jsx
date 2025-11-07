@@ -13,15 +13,15 @@ const PlayfulSkills = () => {
     const section = sectionRef.current;
     
     gsap.from(section.querySelectorAll('.skill-item'), {
-      scale: 0.5,
-      rotation: 90,
-      opacity: 0.3,
-      duration: 0.4,
-      stagger: 0.04,
-      ease: 'back.out(1.5)',
+      scale: 0,
+      rotation: 360,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.08,
+      ease: 'elastic.out(1, 0.5)',
       scrollTrigger: {
         trigger: section,
-        start: 'top 100%',
+        start: 'top 85%',
         toggleActions: 'play none none reverse'
       }
     });
