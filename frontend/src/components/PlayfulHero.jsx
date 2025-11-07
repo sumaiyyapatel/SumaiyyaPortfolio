@@ -22,16 +22,36 @@ const PlayfulHero = () => {
       ease: 'elastic.out(1, 0.6)'
     });
 
-    // Animate shapes
+    // Animate shapes - MORE DRAMATIC
     shapesRef.current.forEach((shape, i) => {
-      gsap.to(shape, {
-        y: '+=30',
-        rotation: i % 2 === 0 ? '+=15' : '-=15',
-        duration: 3 + i,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power1.inOut'
-      });
+      if (shape) {
+        // Floating animation
+        gsap.to(shape, {
+          y: '+=60',
+          x: i % 2 === 0 ? '+=30' : '-=30',
+          duration: 4 + i * 0.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+        
+        // Rotation animation
+        gsap.to(shape, {
+          rotation: i % 2 === 0 ? '+=360' : '-=360',
+          duration: 15 + i * 2,
+          repeat: -1,
+          ease: 'none'
+        });
+        
+        // Scale pulse
+        gsap.to(shape, {
+          scale: 1.2,
+          duration: 2 + i * 0.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'power1.inOut'
+        });
+      }
     });
   }, []);
 
