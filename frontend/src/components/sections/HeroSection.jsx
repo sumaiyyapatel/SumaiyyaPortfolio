@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin';
-import Hero3D from '../Hero3D';
 import { portfolioData } from '../../data/mock';
 import { ArrowDown } from 'lucide-react';
 
