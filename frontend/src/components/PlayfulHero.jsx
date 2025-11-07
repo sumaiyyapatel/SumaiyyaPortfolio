@@ -50,15 +50,15 @@ const PlayfulHero = () => {
       <div className="relative z-10 text-center px-6 max-w-6xl">
         <div ref={titleRef} className="space-y-4 mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <Sparkles className="w-12 h-12 text-[#FF6B35]" />
-            <Zap className="w-16 h-16 text-[#00D4FF]" />
-            <Star className="w-12 h-12 text-[#9D4EDD]" />
+            <Sparkles className="w-12 h-12 text-[#FF6B35] animate-wiggle" />
+            <Zap className="w-16 h-16 text-[#00D4FF] animate-pulse" />
+            <Star className="w-12 h-12 text-[#9D4EDD] animate-wiggle" />
           </div>
           
-          <h1 className="text-8xl md:text-[12rem] font-black leading-none text-white drop-shadow-2xl">
+          <h1 className="text-9xl md:text-[14rem] font-black leading-none text-white drop-shadow-2xl" style={{WebkitTextStroke: '2px #FF6B35'}}>
             SUMAIYYA
           </h1>
-          <h1 className="text-8xl md:text-[12rem] font-black leading-none" style={{ 
+          <h1 className="text-9xl md:text-[14rem] font-black leading-none text-black" style={{ 
             WebkitTextStroke: '4px #000',
             WebkitTextFillColor: 'transparent'
           }}>
