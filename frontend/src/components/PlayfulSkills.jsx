@@ -41,26 +41,26 @@ const PlayfulSkills = () => {
   };
 
   return (
-    <ScrollSection className="min-h-screen bg-[#FFD23F] py-32 px-6 relative overflow-hidden">
+    <ScrollSection className="min-h-screen bg-[#FFD23F] py-16 sm:py-24 md:py-32 px-4 sm:px-6 relative overflow-hidden">
       {/* Background circles */}
-      <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-[#FF6B35] opacity-30 blur-3xl"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#00D4FF] opacity-30 blur-3xl"></div>
+      <div className="absolute top-10 sm:top-20 right-10 sm:right-20 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 rounded-full bg-[#FF6B35] opacity-30 blur-3xl"></div>
+      <div className="absolute bottom-10 sm:bottom-20 left-10 sm:left-20 w-64 sm:w-80 md:w-96 h-64 sm:h-80 md:h-96 rounded-full bg-[#00D4FF] opacity-30 blur-3xl"></div>
 
       <div ref={contentRef} className="max-w-7xl mx-auto relative z-10">
-        <h2 className="text-8xl md:text-[12rem] font-black text-center mb-20 leading-none">
+        <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-[12rem] font-black text-center mb-8 sm:mb-12 md:mb-20 leading-none">
           SKILLS
         </h2>
 
         {/* Category selector */}
-        <div className="flex flex-wrap gap-4 justify-center mb-16">
+        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center mb-8 sm:mb-12 md:mb-16">
           {Object.entries(categories).map(([key, cat]) => (
             <button
               key={key}
               onClick={() => setActiveCategory(key)}
-              className="px-10 py-5 text-3xl font-black rounded-full border-4 border-black transition-all duration-300"
+              className="w-[calc(50%-0.5rem)] sm:w-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 md:py-5 text-lg sm:text-2xl md:text-3xl font-black rounded-full border-2 sm:border-3 md:border-4 border-black transition-all duration-300"
               style={{
                 backgroundColor: activeCategory === key ? cat.color : '#fff',
-                transform: activeCategory === key ? 'scale(1.1) rotate(-2deg)' : 'scale(1)',
+                transform: activeCategory === key ? 'scale(1.05) rotate(-1deg)' : 'scale(1)',
                 color: '#000'
               }}
             >
@@ -70,30 +70,30 @@ const PlayfulSkills = () => {
         </div>
 
         {/* Skills grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {categories[activeCategory].skills.map((skill, index) => (
             <div
               key={skill.name}
               className="skill-item"
             >
               <div 
-                className="aspect-square rounded-3xl p-8 flex flex-col items-center justify-center text-center border-4 border-black shadow-xl hover:scale-110 transition-all duration-300 cursor-pointer"
+                className="aspect-square rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center text-center border-2 sm:border-3 md:border-4 border-black shadow-xl hover:scale-105 sm:hover:scale-110 transition-all duration-300 cursor-pointer"
                 style={{ backgroundColor: categories[activeCategory].color }}
               >
-                <div className="text-7xl font-black mb-4">
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-3 md:mb-4">
                   {skill.level}
-                  <span className="text-4xl">%</span>
+                  <span className="text-2xl sm:text-3xl md:text-4xl">%</span>
                 </div>
-                <div className="text-2xl font-black">{skill.name}</div>
+                <div className="text-base sm:text-xl md:text-2xl font-black">{skill.name}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Fun stat */}
-        <div className="mt-20 text-center">
-          <div className="inline-block bg-black text-white px-12 py-8 rounded-3xl transform -rotate-2">
-            <p className="text-4xl font-black">Made 100+ animations that make people say "WOW!" ✨</p>
+        <div className="mt-8 sm:mt-12 md:mt-20 text-center px-4">
+          <div className="inline-block bg-black text-white px-6 sm:px-8 md:px-12 py-4 sm:py-6 md:py-8 rounded-2xl sm:rounded-3xl transform -rotate-1 sm:-rotate-2">
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black">Made 100+ animations that make people say "WOW!" ✨</p>
           </div>
         </div>
       </div>

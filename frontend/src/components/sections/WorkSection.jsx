@@ -47,7 +47,7 @@ const ProjectCard = ({ project, index }) => {
       style={{ transformStyle: 'preserve-3d' }}
     >
       {/* Image */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
         <img
           src={project.image}
           alt={project.title}
@@ -57,16 +57,16 @@ const ProjectCard = ({ project, index }) => {
       </div>
 
       {/* Content */}
-      <div className="p-6 relative" style={{ transform: 'translateZ(50px)' }}>
-        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#00d4ff] transition-colors">
+      <div className="p-4 sm:p-5 md:p-6 relative" style={{ transform: 'translateZ(50px)' }}>
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-[#00d4ff] transition-colors">
           {project.title}
         </h3>
-        <p className="text-gray-400 mb-4 leading-relaxed">
+        <p className="text-sm sm:text-base text-gray-400 mb-3 sm:mb-4 leading-relaxed">
           {project.description}
         </p>
 
         {/* Technologies */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
           {project.technologies.map((tech, i) => (
             <span
               key={i}
@@ -88,13 +88,13 @@ const ProjectCard = ({ project, index }) => {
         </div>
 
         {/* Action buttons */}
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#00d4ff] bg-opacity-10 text-[#00d4ff] rounded-lg hover:bg-opacity-20 transition-all duration-300">
-            <ExternalLink className="w-4 h-4" />
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+          <button className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-[#00d4ff] bg-opacity-10 text-[#00d4ff] rounded-lg hover:bg-opacity-20 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
+            <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             View Project
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 border border-[#00d4ff] border-opacity-30 text-[#00d4ff] rounded-lg hover:bg-[#00d4ff] hover:bg-opacity-10 transition-all duration-300">
-            <Code className="w-4 h-4" />
+          <button className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 border border-[#00d4ff] border-opacity-30 text-[#00d4ff] rounded-lg hover:bg-[#00d4ff] hover:bg-opacity-10 transition-all duration-300 text-sm sm:text-base w-full sm:w-auto">
+            <Code className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Code
           </button>
         </div>
@@ -122,7 +122,7 @@ const WorkSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {portfolioData.projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}

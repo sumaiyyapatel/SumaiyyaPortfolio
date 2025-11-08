@@ -1,0 +1,40 @@
+.title-stroke {
+  -webkit-text-stroke: 2px #000;
+}
+
+@media (min-width: 640px) {
+  .title-stroke {
+    -webkit-text-stroke: 3px #000;
+  }
+}
+
+@media (min-width: 768px) {
+  .title-stroke {
+    -webkit-text-stroke: 4px #000;
+  }
+}
+
+.title-shadow {
+  text-shadow: 3px 3px 0 #FF6B35;
+}
+
+@media (min-width: 640px) {
+  .title-shadow {
+    text-shadow: 4px 4px 0 #FF6B35;
+  }
+}
+
+@media (min-width: 768px) {
+  .title-shadow {
+    text-shadow: 6px 6px 0 #FF6B35;
+  }
+}
+
+@keyframes gridMove {
+  0% { 
+    transform: translate(0, 0); 
+  }
+  100% { 
+    transform: translate(50px, 50px); 
+  }
+}

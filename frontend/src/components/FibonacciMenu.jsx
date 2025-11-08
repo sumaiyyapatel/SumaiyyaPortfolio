@@ -28,8 +28,28 @@ const FibonacciMenu = ({ onNavigate }) => {
   const animateOpen = () => {
     const tiles = tilesRef.current;
     
-    // Fibonacci positioning
-    const positions = [
+    // Responsive Fibonacci positioning
+    const isMobile = window.innerWidth < 640;
+    const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+    
+    const positions = isMobile ? [
+      // Mobile layout - stacked 2x3
+      { x: 0.25, y: 0.2, size: 0.45 },
+      { x: 0.75, y: 0.2, size: 0.45 },
+      { x: 0.25, y: 0.5, size: 0.45 },
+      { x: 0.75, y: 0.5, size: 0.45 },
+      { x: 0.25, y: 0.8, size: 0.45 },
+      { x: 0.75, y: 0.8, size: 0.45 }
+    ] : isTablet ? [
+      // Tablet layout - balanced 3x2
+      { x: 0.2, y: 0.25, size: 0.3 },
+      { x: 0.5, y: 0.25, size: 0.3 },
+      { x: 0.8, y: 0.25, size: 0.3 },
+      { x: 0.2, y: 0.75, size: 0.3 },
+      { x: 0.5, y: 0.75, size: 0.3 },
+      { x: 0.8, y: 0.75, size: 0.3 }
+    ] : [
+      // Desktop layout - Fibonacci spiral
       { x: 0.15, y: 0.15, size: 0.25 },
       { x: 0.65, y: 0.15, size: 0.25 },
       { x: 0.15, y: 0.6, size: 0.25 },

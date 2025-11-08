@@ -25,17 +25,40 @@
 
 .grid-tile {
   position: absolute;
-  border: 2px solid rgba(0, 212, 255, 0.3);
+  border: 1px solid rgba(0, 212, 255, 0.3);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: rgba(10, 10, 10, 0.95);
   backdrop-filter: blur(10px);
 }
 
-.grid-tile:hover {
-  border-color: rgba(0, 212, 255, 0.8);
-  background: rgba(0, 212, 255, 0.1);
-  transform: scale(1.02) !important;
+@media (min-width: 640px) {
+  .grid-tile {
+    border-width: 1.5px;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-tile {
+    border-width: 2px;
+  }
+}
+
+@media (hover: hover) {
+  .grid-tile:hover {
+    border-color: rgba(0, 212, 255, 0.8);
+    background: rgba(0, 212, 255, 0.1);
+    transform: scale(1.02) !important;
+  }
+}
+
+/* Touch device interaction */
+@media (hover: none) {
+  .grid-tile:active {
+    border-color: rgba(0, 212, 255, 0.8);
+    background: rgba(0, 212, 255, 0.1);
+    transform: scale(0.98) !important;
+  }
 }
 
 .tile-lines {
@@ -47,8 +70,21 @@
   background-image: 
     linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.5;
+  background-size: 15px 15px;
+  opacity: 0.3;
+}
+
+@media (min-width: 640px) {
+  .tile-lines {
+    background-size: 20px 20px;
+    opacity: 0.4;
+  }
+}
+
+@media (min-width: 768px) {
+  .tile-lines {
+    opacity: 0.5;
+  }
 }
 
 .fibonacci-content {
@@ -82,18 +118,44 @@
 .tile-text {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(1rem, 3vw, 2rem);
   color: #00d4ff;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
   transition: all 0.3s ease;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .tile-text {
+    font-size: clamp(1.25rem, 3.5vw, 2.5rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .tile-text {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+  }
 }
 
 .tile-text.devanagari {
   font-family: 'Noto Sans Devanagari', sans-serif;
-  font-size: clamp(1rem, 2.5vw, 2rem);
+  font-size: clamp(0.75rem, 2vw, 1.5rem);
   color: rgba(0, 212, 255, 0.6);
+}
+
+@media (min-width: 640px) {
+  .tile-text.devanagari {
+    font-size: clamp(0.875rem, 2.25vw, 1.75rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .tile-text.devanagari {
+    font-size: clamp(1rem, 2.5vw, 2rem);
+  }
 }
 
 .grid-tile:hover .tile-text {
@@ -104,14 +166,14 @@
 /* Menu toggle button */
 .menu-toggle {
   position: fixed;
-  top: 2rem;
-  right: 2rem;
+  top: 1rem;
+  right: 1rem;
   z-index: 10000;
   background: rgba(0, 212, 255, 0.1);
   border: 2px solid rgba(0, 212, 255, 0.5);
   color: #00d4ff;
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -119,6 +181,24 @@
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+}
+
+@media (min-width: 640px) {
+  .menu-toggle {
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 54px;
+    height: 54px;
+  }
+}
+
+@media (min-width: 768px) {
+  .menu-toggle {
+    top: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+  }
 }
 
 .menu-toggle:hover {

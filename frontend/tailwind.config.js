@@ -88,6 +88,10 @@ module.exports = {
         'pulse-scale': {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.05)' }
+        },
+        'grid-move': {
+          '0%': { transform: 'translate(0, 0)' },
+          '100%': { transform: 'translate(50px, 50px)' }
         }
   		},
   		animation: {
@@ -97,7 +101,8 @@ module.exports = {
         'float': 'float-up-down 6s ease-in-out infinite',
         'rotate': 'rotate-slow 20s linear infinite',
         'wiggle': 'wiggle 2s ease-in-out infinite',
-        'pulse-scale': 'pulse-scale 3s ease-in-out infinite'
+        'pulse-scale': 'pulse-scale 3s ease-in-out infinite',
+        'grid': 'grid-move 20s linear infinite'
   		}
   	}
   },
