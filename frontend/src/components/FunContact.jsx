@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { portfolioData } from '../data/mock';
-import { Mail, Linkedin, Github, Send, Sparkles } from 'lucide-react';
+import { Mail, Linkedin, Github, Phone, MapPin, Copy, CheckCircle } from 'lucide-react';
 
 const FunContact = () => {
   const sectionRef = useRef(null);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [copiedStates, setCopiedStates] = React.useState({});
 
   useEffect(() => {
     const shapes = sectionRef.current.querySelectorAll('.float-shape');
@@ -21,9 +21,21 @@ const FunContact = () => {
     });
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Thanks ${formData.name}! Message sent! 🎉`);
+  const copyToClipboard = (text, key) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedStates(prev => ({ ...prev, [key]: true }));
+      setTimeout(() => {
+        setCopiedStates(prev => ({ ...prev, [key]: false }));
+      }, 2000);
+    });
+  };
+
+  const openEmail = () => {
+    window.location.href = `mailto:${portfolioData.hero.email}`;
+  };
+
+  const openPhone = () => {
+    window.location.href = `tel:${portfolioData.hero.phone}`;
   };
 
   return (
@@ -44,105 +56,189 @@ const FunContact = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact info */}
-          <div className="space-y-6">
-            <a 
-              href={`mailto:${portfolioData.hero.email}`}
-              className="block bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:rotate-2 transition-all duration-300"
-            >
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {/* Email Card */}
+          <div className="bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:rotate-2 transition-all duration-300 shadow-2xl">
+            <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-6">
-                <div className="w-20 h-20 bg-[#FF6B35] rounded-full flex items-center justify-center">
+                <div className="w-20 h-20 bg-[#FF6B35] rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-10 h-10 text-white" />
                 </div>
                 <div>
-                  <div className="text-xl font-black mb-1">EMAIL ME</div>
-                  <div className="text-2xl font-bold text-gray-600">{portfolioData.hero.email}</div>
+                  <div className="text-xl font-black mb-2">EMAIL ME</div>
+                  <div className="text-lg font-bold text-gray-600 break-all">
+                    {portfolioData.hero.email}
+                  </div>
                 </div>
               </div>
-            </a>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={openEmail}
+                className="flex-1 px-6 py-3 bg-black text-white text-lg font-black rounded-full hover:scale-105 transition-all duration-300"
+              >
+                SEND EMAIL
+              </button>
+              <button
+                onClick={() => copyToClipboard(portfolioData.hero.email, 'email')}
+                className="px-6 py-3 bg-gray-200 text-black rounded-full hover:bg-gray-300 transition-all duration-300"
+                title="Copy email"
+              >
+                {copiedStates.email ? <CheckCircle className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
 
-            <a 
-              href={portfolioData.hero.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:-rotate-2 transition-all duration-300"
-            >
+          {/* Phone Card */}
+          <div className="bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:-rotate-2 transition-all duration-300 shadow-2xl">
+            <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-6">
-                <div className="w-20 h-20 bg-[#00D4FF] rounded-full flex items-center justify-center">
+                <div className="w-20 h-20 bg-[#00D4FF] rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-10 h-10 text-white" />
+                </div>
+                <div>
+                  <div className="text-xl font-black mb-2">CALL ME</div>
+                  <div className="text-lg font-bold text-gray-600">
+                    {portfolioData.hero.phone}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={openPhone}
+                className="flex-1 px-6 py-3 bg-black text-white text-lg font-black rounded-full hover:scale-105 transition-all duration-300"
+              >
+                CALL NOW
+              </button>
+              <button
+                onClick={() => copyToClipboard(portfolioData.hero.phone, 'phone')}
+                className="px-6 py-3 bg-gray-200 text-black rounded-full hover:bg-gray-300 transition-all duration-300"
+                title="Copy phone"
+              >
+                {copiedStates.phone ? <CheckCircle className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+
+          {/* LinkedIn Card */}
+          <div className="bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:rotate-2 transition-all duration-300 shadow-2xl">
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center gap-6">
+                <div className="w-20 h-20 bg-[#0077B5] rounded-full flex items-center justify-center flex-shrink-0">
                   <Linkedin className="w-10 h-10 text-white" />
                 </div>
                 <div>
-                  <div className="text-xl font-black mb-1">LINKEDIN</div>
-                  <div className="text-2xl font-bold text-gray-600">Connect with me</div>
+                  <div className="text-xl font-black mb-2">LINKEDIN</div>
+                  <div className="text-lg font-bold text-gray-600">
+                    Connect with me
+                  </div>
                 </div>
               </div>
-            </a>
-
-            <a 
-              href={portfolioData.hero.github}
+            </div>
+            <a
+              href={portfolioData.hero.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="block bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:rotate-2 transition-all duration-300"
+              className="block w-full px-6 py-3 bg-black text-white text-lg font-black rounded-full hover:scale-105 transition-all duration-300 text-center"
             >
+              VIEW PROFILE
+            </a>
+          </div>
+
+          {/* GitHub Card */}
+          <div className="bg-white rounded-3xl p-8 border-4 border-black transform hover:scale-105 hover:-rotate-2 transition-all duration-300 shadow-2xl">
+            <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-6">
-                <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center">
+                <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center flex-shrink-0">
                   <Github className="w-10 h-10 text-white" />
                 </div>
                 <div>
-                  <div className="text-xl font-black mb-1">GITHUB</div>
-                  <div className="text-2xl font-bold text-gray-600">Check my code</div>
+                  <div className="text-xl font-black mb-2">GITHUB</div>
+                  <div className="text-lg font-bold text-gray-600">
+                    Check my code
+                  </div>
                 </div>
               </div>
+            </div>
+            <a
+              href={portfolioData.hero.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full px-6 py-3 bg-black text-white text-lg font-black rounded-full hover:scale-105 transition-all duration-300 text-center"
+            >
+              VIEW REPOS
             </a>
           </div>
+        </div>
 
-          {/* Contact form */}
-          <div className="bg-white rounded-3xl p-12 border-4 border-black">
-            <h3 className="text-4xl font-black mb-8 flex items-center gap-3">
-              <Sparkles className="w-10 h-10 text-[#FFD23F]" />
-              Quick Message
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-6 py-4 text-xl font-bold border-4 border-black rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFD23F] transition-all"
-                  required
-                />
-              </div>
-              <div>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-6 py-4 text-xl font-bold border-4 border-black rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFD23F] transition-all"
-                  required
-                />
-              </div>
-              <div>
-                <textarea
-                  placeholder="Tell me about your awesome project..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  rows={5}
-                  className="w-full px-6 py-4 text-xl font-bold border-4 border-black rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFD23F] transition-all resize-none"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full px-8 py-6 bg-black text-white text-2xl font-black rounded-2xl flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300"
-              >
-                SEND IT!
-                <Send className="w-6 h-6" />
-              </button>
-            </form>
+        {/* Location Badge */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-4 bg-white px-8 py-6 rounded-3xl border-4 border-black shadow-2xl">
+            <MapPin className="w-8 h-8 text-[#FF6B35]" />
+            <div className="text-left">
+              <div className="text-sm font-bold text-gray-600">BASED IN</div>
+              <div className="text-2xl font-black">Nagpur, Maharashtra, India</div>
+            </div>
           </div>
+        </div>
+
+        {/* Fun Quote */}
+        <div className="mt-12 text-center">
+          <div className="inline-block bg-black text-white px-12 py-8 rounded-3xl transform -rotate-2 shadow-2xl max-w-2xl">
+            <p className="text-3xl md:text-4xl font-black leading-tight">
+              "I believe in creating experiences that are not just functional, but emotionally engaging and memorable." ✨
+            </p>
+            <p className="text-[#FFD23F] mt-6 text-2xl font-bold">- Sumaiyya Patel</p>
+          </div>
+        </div>
+
+        {/* Social Links Bar */}
+        <div className="mt-16 flex justify-center gap-6 flex-wrap">
+          <a
+            href={portfolioData.hero.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-16 h-16 bg-[#0077B5] rounded-full flex items-center justify-center hover:scale-125 transition-all duration-300 shadow-xl"
+            title="LinkedIn"
+          >
+            <Linkedin className="w-8 h-8 text-white" />
+          </a>
+          <a
+            href={portfolioData.hero.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-16 h-16 bg-black rounded-full flex items-center justify-center hover:scale-125 transition-all duration-300 shadow-xl"
+            title="GitHub"
+          >
+            <Github className="w-8 h-8 text-white" />
+          </a>
+          <button
+            onClick={openEmail}
+            className="w-16 h-16 bg-[#FF6B35] rounded-full flex items-center justify-center hover:scale-125 transition-all duration-300 shadow-xl"
+            title="Email"
+          >
+            <Mail className="w-8 h-8 text-white" />
+          </button>
+          <button
+            onClick={openPhone}
+            className="w-16 h-16 bg-[#00D4FF] rounded-full flex items-center justify-center hover:scale-125 transition-all duration-300 shadow-xl"
+            title="Phone"
+          >
+            <Phone className="w-8 h-8 text-white" />
+          </button>
+        </div>
+
+        {/* Download Resume CTA: use anchor to reliably open in new tab */}
+        <div className="mt-16 text-center">
+          <a
+            href="/Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-12 py-6 bg-[#FFD23F] text-black text-2xl font-black rounded-full border-4 border-black hover:scale-110 hover:rotate-3 transition-all duration-300 shadow-2xl"
+          >
+            📄 DOWNLOAD RESUME
+          </a>
         </div>
       </div>
     </div>

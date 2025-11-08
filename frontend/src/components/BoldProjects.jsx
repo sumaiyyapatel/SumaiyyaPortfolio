@@ -3,41 +3,48 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from '../data/mock';
 import { ExternalLink, ArrowRight } from 'lucide-react';
+import ScrollSection from './ScrollSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const BoldProjects = () => {
-  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
-    const projects = sectionRef.current.querySelectorAll('.project-card');
+    const element = contentRef.current;
+    if (!element) return;
 
-    projects.forEach((project, index) => {
-      gsap.from(project, {
-        x: index % 2 === 0 ? -200 : 200,
-        opacity: 0,
-        rotation: index % 2 === 0 ? -15 : 15,
-        scale: 0.8,
-        duration: 1,
-        ease: 'elastic.out(1, 0.6)',
-        scrollTrigger: {
-          trigger: project,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
+    const ctx = gsap.context(() => {
+      const projects = element.querySelectorAll('.project-card');
+
+      projects.forEach((project, index) => {
+        gsap.from(project, {
+          x: index % 2 === 0 ? -200 : 200,
+          opacity: 0,
+          rotation: index % 2 === 0 ? -15 : 15,
+          scale: 0.8,
+          duration: 1,
+          ease: 'elastic.out(1, 0.6)',
+          scrollTrigger: {
+            trigger: project,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        });
       });
-    });
+    }, element);
+
+    return () => ctx.revert();
   }, []);
 
   const colors = ['#FF6B35', '#00D4FF', '#9D4EDD', '#06FFA5'];
 
   return (
-    <div ref={sectionRef} className="min-h-screen bg-gradient-to-b from-[#00D4FF] to-[#9D4EDD] py-32 px-6 relative overflow-hidden">
-      {/* Animated circles in background */}
+    <ScrollSection className="min-h-screen bg-gradient-to-b from-[#00D4FF] to-[#9D4EDD] py-32 px-6 relative overflow-hidden">
       <div className="absolute top-20 right-20 w-96 h-96 rounded-full border-8 border-white opacity-10 animate-pulse-scale"></div>
       <div className="absolute bottom-40 left-20 w-72 h-72 rounded-full border-8 border-white opacity-10 animate-pulse-scale" style={{animationDelay: '1s'}}></div>
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={contentRef} className="max-w-7xl mx-auto relative z-10">
         <h2 className="text-8xl md:text-[12rem] font-black text-white mb-20 leading-none text-center">
           MY WORK
         </h2>
@@ -49,7 +56,6 @@ const BoldProjects = () => {
               className="project-card"
             >
               <div className={`grid md:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-                {/* Image */}
                 <div className={`order-2 ${index % 2 === 1 ? 'md:order-1' : ''}`}>
                   <div 
                     className="aspect-video rounded-3xl overflow-hidden border-8 border-black shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all duration-300"
@@ -63,7 +69,6 @@ const BoldProjects = () => {
                   </div>
                 </div>
 
-                {/* Content */}
                 <div className={`order-1 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
                   <div className="bg-white rounded-3xl p-12 border-8 border-black shadow-2xl">
                     <div className="inline-block px-6 py-2 rounded-full text-xl font-bold mb-6" style={{ backgroundColor: colors[index % colors.length] }}>
@@ -76,7 +81,6 @@ const BoldProjects = () => {
                       {project.description}
                     </p>
 
-                    {/* Tech tags */}
                     <div className="flex flex-wrap gap-3 mb-8">
                       {project.technologies.map((tech, i) => (
                         <span
@@ -99,7 +103,7 @@ const BoldProjects = () => {
           ))}
         </div>
       </div>
-    </div>
+    </ScrollSection>
   );
 };
 

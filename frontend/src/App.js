@@ -9,6 +9,7 @@ import InteractiveAbout from './components/InteractiveAbout';
 import BoldProjects from './components/BoldProjects';
 import PlayfulSkills from './components/PlayfulSkills';
 import FunContact from './components/FunContact';
+import EducationCertificates from './components/EducationCertificates';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,21 +45,23 @@ function App() {
   return (
     <div className="App">
       <PlayfulMenu />
-      
+
       <PlayfulHero />
-      
+
       <div id="about">
         <InteractiveAbout />
       </div>
-      
+
       <div id="work">
         <BoldProjects />
       </div>
-      
+
       <div id="skills">
         <PlayfulSkills />
       </div>
-      
+      <div id="education">
+        <EducationCertificates />
+      </div>
       <div id="contact">
         <FunContact />
       </div>

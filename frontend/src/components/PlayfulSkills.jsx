@@ -2,29 +2,35 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from '../data/mock';
+import ScrollSection from './ScrollSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PlayfulSkills = () => {
-  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState('animation');
 
   useEffect(() => {
-    const section = sectionRef.current;
+    const element = contentRef.current;
+    if (!element) return;
     
-    gsap.from(section.querySelectorAll('.skill-item'), {
-      scale: 0,
-      rotation: 360,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.08,
-      ease: 'elastic.out(1, 0.5)',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+    const ctx = gsap.context(() => {
+      gsap.from(element.querySelectorAll('.skill-item'), {
+        scale: 0,
+        rotation: 360,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.08,
+        ease: 'elastic.out(1, 0.5)',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    }, element);
+
+    return () => ctx.revert();
   }, []);
 
   const categories = {
@@ -35,12 +41,12 @@ const PlayfulSkills = () => {
   };
 
   return (
-    <div ref={sectionRef} className="min-h-screen bg-[#FFD23F] py-32 px-6 relative overflow-hidden">
+    <ScrollSection className="min-h-screen bg-[#FFD23F] py-32 px-6 relative overflow-hidden">
       {/* Background circles */}
       <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-[#FF6B35] opacity-30 blur-3xl"></div>
       <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#00D4FF] opacity-30 blur-3xl"></div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={contentRef} className="max-w-7xl mx-auto relative z-10">
         <h2 className="text-8xl md:text-[12rem] font-black text-center mb-20 leading-none">
           SKILLS
         </h2>
@@ -91,7 +97,7 @@ const PlayfulSkills = () => {
           </div>
         </div>
       </div>
-    </div>
+    </ScrollSection>
   );
 };
 

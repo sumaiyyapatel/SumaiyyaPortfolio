@@ -3,30 +3,36 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from '../data/mock';
 import { Sparkles, Zap, Code2, Palette } from 'lucide-react';
+import ScrollSection from './ScrollSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const InteractiveAbout = () => {
-  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
   const [hoverCard, setHoverCard] = useState(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
+    const element = contentRef.current;
+    if (!element) return;
 
-    gsap.from(section.querySelectorAll('.animate-in'), {
-      y: 80,
-      scale: 0.9,
-      opacity: 0,
-      rotation: -5,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'back.out(1.5)',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+    const ctx = gsap.context(() => {
+      gsap.from(element.querySelectorAll('.animate-in'), {
+        y: 80,
+        scale: 0.9,
+        opacity: 0,
+        rotation: -5,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    }, element);
+
+    return () => ctx.revert();
   }, []);
 
   const cards = [
@@ -61,7 +67,7 @@ const InteractiveAbout = () => {
   ];
 
   return (
-    <div ref={sectionRef} className="min-h-screen bg-white py-32 px-6 relative overflow-hidden">
+    <ScrollSection className="min-h-screen bg-white py-32 px-6 relative overflow-hidden">
       {/* Dot pattern background */}
       <div className="absolute inset-0 opacity-20" style={{
         backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
@@ -73,12 +79,12 @@ const InteractiveAbout = () => {
         ABOUT
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={contentRef} className="max-w-7xl mx-auto relative z-10">
         <div className="animate-in mb-20">
           <h2 className="text-8xl md:text-[10rem] font-black leading-none mb-8">
             WHO IS
             <br />
-            <span className="text-transparent" style={{ WebkitTextStroke: '4px #000' }}>SUMAIYYA?</span>
+            <span className="text-transparent [-webkit-text-stroke:4px_#000]">SUMAIYYA?</span>
           </h2>
         </div>
 
@@ -116,7 +122,7 @@ const InteractiveAbout = () => {
           </div>
         </div>
       </div>
-    </div>
+    </ScrollSection>
   );
 };
 

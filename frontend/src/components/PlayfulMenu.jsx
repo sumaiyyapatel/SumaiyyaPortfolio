@@ -38,10 +38,10 @@ const PlayfulMenu = ({ onNavigate }) => {
               <button
                 key={item.id}
                 onClick={() => handleItemClick(item.id)}
-                className="aspect-square rounded-3xl flex items-center justify-center text-5xl md:text-7xl font-black border-8 border-white hover:scale-110 hover:rotate-6 transition-all duration-300 shadow-2xl"
+                className="aspect-square rounded-3xl flex items-center justify-center text-5xl md:text-7xl font-black border-8 border-white hover:scale-110 hover:rotate-6 transition-all duration-300 shadow-2xl animate-fade-in-scale"
                 style={{ 
                   backgroundColor: item.color,
-                  animation: `fadeInScale 0.5s ease-out ${index * 0.1}s both`
+                  animationDelay: `${index * 0.1}s`
                 }}
               >
                 {item.label}
@@ -50,19 +50,6 @@ const PlayfulMenu = ({ onNavigate }) => {
           </div>
         </div>
       )}
-
-      <style jsx>{`
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: scale(0) rotate(180deg);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-          }
-        }
-      `}</style>
     </>
   );
 };
