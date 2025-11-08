@@ -10,6 +10,17 @@ gsap.registerPlugin(ScrollTrigger);
 const InteractiveAbout = () => {
   const contentRef = useRef(null);
   const [hoverCard, setHoverCard] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const element = contentRef.current;
@@ -112,10 +123,10 @@ const InteractiveAbout = () => {
                 key={card.id}
                 onMouseEnter={() => setHoverCard(card.id)}
                 onMouseLeave={() => setHoverCard(null)}
-                className="aspect-square rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 border-2 sm:border-4 border-black"
+                className={`aspect-square rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 flex flex-col items-center justify-center text-center transition-all duration-300 border-2 sm:border-4 border-black ${!isMobile ? 'cursor-pointer' : ''}`}
                 style={{
-                  backgroundColor: hoverCard === card.id ? card.color : '#fff',
-                  transform: hoverCard === card.id ? 'scale(1.05) rotate(5deg)' : 'scale(1) rotate(0deg)'
+                  backgroundColor: isMobile ? card.color : (hoverCard === card.id ? card.color : '#fff'),
+                  transform: !isMobile ? (hoverCard === card.id ? 'scale(1.05) rotate(5deg)' : 'scale(1) rotate(0deg)') : 'none'
                 }}
               >
                 <div className="text-black mb-2 sm:mb-3 md:mb-4">{card.icon}</div>

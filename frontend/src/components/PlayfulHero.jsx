@@ -188,25 +188,25 @@ const PlayfulHero = () => {
             </p>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center flex-wrap">
-            <button 
-              onClick={scrollToAbout}
-              className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-black text-white text-lg sm:text-xl md:text-2xl font-black rounded-full hover:scale-105 sm:hover:scale-110 hover:rotate-2 sm:hover:rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
-            >
-              <span className="relative z-10">SEE MY WORK</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#00D4FF] to-[#9D4EDD] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
-            </button>
-            <a
-              href={`mailto:${portfolioData.hero.email}`}
-              className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-white text-black text-lg sm:text-xl md:text-2xl font-black rounded-full border-2 sm:border-3 md:border-4 border-black hover:scale-105 sm:hover:scale-110 hover:-rotate-2 sm:hover:-rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
-            >
-              <span className="relative z-10">LET'S TALK</span>
-              <div className="absolute inset-0 bg-[#FFD23F] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
-            </a>
-          </div>
+          
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center flex-wrap">
+                <button 
+                  onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-black text-white text-lg sm:text-xl md:text-2xl font-black rounded-full hover:scale-105 sm:hover:scale-110 hover:rotate-2 sm:hover:rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
+                >
+                  <span className="relative z-10">SEE MY WORK</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#00D4FF] to-[#9D4EDD] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
+                </button>
+                <a
+                  href={`mailto:${portfolioData.hero.email}`}
+                  className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-white text-black text-lg sm:text-xl md:text-2xl font-black rounded-full border-2 sm:border-3 md:border-4 border-black hover:scale-105 sm:hover:scale-110 hover:-rotate-2 sm:hover:-rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
+                >
+                  <span className="relative z-10">LET'S TALK</span>
+                  <div className="absolute inset-0 bg-[#FFD23F] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
+                </a>
+                </div>
 
-          {/* Animated scroll indicator */}
+                {/* Animated scroll indicator */}
           <div className="mt-24 cursor-pointer" onClick={scrollToAbout}>
             <div className="inline-flex flex-col items-center gap-2 animate-bounce">
               <div className="text-black font-bold text-lg">SCROLL</div>
