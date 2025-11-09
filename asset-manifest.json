@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/SumaiyyaPortfolio/static/css/main.429564c5.css",
+    "main.js": "/SumaiyyaPortfolio/static/js/main.e0202322.js",
+    "index.html": "/SumaiyyaPortfolio/index.html",
+    "main.429564c5.css.map": "/SumaiyyaPortfolio/static/css/main.429564c5.css.map",
+    "main.e0202322.js.map": "/SumaiyyaPortfolio/static/js/main.e0202322.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.429564c5.css",
+    "static/js/main.e0202322.js"
+  ]
+}
