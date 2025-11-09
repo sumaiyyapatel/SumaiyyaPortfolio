@@ -49,7 +49,7 @@ const BoldProjects = () => {
 
       <div ref={contentRef} className="max-w-7xl mx-auto relative z-10">
         <h2 className="text-center text-white font-black mb-20 leading-none text-[3rem] sm:text-[6rem] lg:text-[10rem] xl:text-[12rem]">
-          MY WORK
+          MY <span className="text-transparent title-stroke" style={{WebkitTextStroke: "5px white",textStroke: "3px white", }}>WORK</span>
         </h2>
 
         <div className="space-y-24 sm:space-y-32">
