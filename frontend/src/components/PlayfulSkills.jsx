@@ -1,10 +1,38 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { portfolioData } from "../data/mock";
-import ScrollSection from "./ScrollSection";
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Mock data
+const portfolioData = {
+  skills: {
+    languages: [
+      { name: "JavaScript", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "HTML5", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "CSS3", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      { name: "Python", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+    ],
+    frontend: [
+      { name: "React.js", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "Vue.js", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+      { name: "Bootstrap", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" },
+      { name: "Tailwind", logoURL: "https://www.svgrepo.com/show/374118/tailwind.svg" },
+    ],
+    animation: [
+      { name: "GSAP", logoURL: "https://svgstack.com/media/img/gsap-logo-dNe6788698.webp" },
+      { name: "Three.js", logoURL: "https://icon.icepanel.io/Technology/png-shadow-512/Three.js.png" },
+      { name: "Blender", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" },
+      { name: "Unity", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" },
+    ],
+    tools: [
+      { name: "Firebase", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
+      { name: "Git", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+      { name: "Vite", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg" },
+      { name: "Figma", logoURL: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+    ],
+  }
+};
 
 const PlayfulSkills = () => {
   const contentRef = useRef(null);
@@ -37,88 +65,108 @@ const PlayfulSkills = () => {
     languages: {
       name: "LANGUAGES",
       color: "#8FC93A",
+      emoji: "🔤",
       skills: portfolioData.skills.languages,
     },
     frontend: {
       name: "FRONTEND",
       color: "#FF6B35",
+      emoji: "🎨",
       skills: portfolioData.skills.frontend,
     },
     animation: {
       name: "3D & ANIMATION",
       color: "#00D4FF",
+      emoji: "✨",
       skills: portfolioData.skills.animation,
     },
     tools: {
       name: "TOOLS & MORE",
       color: "#9D4EDD",
+      emoji: "🛠️",
       skills: portfolioData.skills.tools,
     },
   };
 
   return (
-    <ScrollSection className="min-h-screen bg-yellow-300 py-20 px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#F3CA40]  to-[#FF6B35] py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 relative overflow-hidden">
+      {/* Dot pattern background */}
+      <div className="absolute inset-0 opacity-10" style={{
+        backgroundImage: 'radial-gradient(circle, #000 2px, transparent 2px)',
+        backgroundSize: '40px 40px'
+      }}></div>
+
       <div ref={contentRef} className="max-w-7xl mx-auto relative z-10">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20 leading-none">
-          SKILLS
+        {/* Title */}
+        <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[10rem] font-black text-center mb-6 sm:mb-8 leading-none">
+          <span className="text-white">MY</span> <span className="text-transparent title-stroke" style={{WebkitTextStroke: "5px white",textStroke: "1px white", }}>SKILLS</span>
+
         </h2>
+        <p className="text-center text-lg sm:text-xl md:text-2xl font-bold mb-12 sm:mb-16 text-white">
+          The tools I use to build <span className="bg-black text-[#FFD23F] px-2 py-1 inline-block -rotate-1">AMAZING</span> things!
+        </p>
 
         {/* Category selector */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-10 sm:mb-12">
           {Object.entries(categories).map(([key, cat]) => (
             <button
               key={key}
               onClick={() => setActiveCategory(key)}
-              className="px-8 py-4 text-lg md:text-xl font-black rounded-2xl shadow-md transition-all duration-300 hover:scale-105"
+              className="px-5 sm:px-6 py-2 sm:py-3 text-sm sm:text-base md:text-lg font-black rounded-full border-3 border-black transition-all duration-300 hover:scale-105 active:scale-95"
               style={{
                 backgroundColor: activeCategory === key ? cat.color : "#fff",
-                transform:
-                  activeCategory === key ? "scale(1.05) rotate(-1deg)" : "scale(1)",
+                transform: activeCategory === key ? "scale(1.05)" : "scale(1)",
               }}
             >
+              <span className="mr-2">{cat.emoji}</span>
               {cat.name}
             </button>
           ))}
         </div>
 
-        {/* Fixed grid: 4 columns on desktop, 3 on tablet, 2 on mobile */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-6xl mx-auto">
-          {categories[activeCategory].skills.map((skill) => (
-            <div key={skill.name} className="skill-item w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]">
-              <div
-                className="group relative aspect-square rounded-2xl p-4 sm:p-6 flex flex-col items-center justify-center text-center overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105"
-                style={{ backgroundColor: categories[activeCategory].color }}
+        {/* Skills Grid - Cards with category color */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6 max-w-5xl mx-auto">
+            {categories[activeCategory].skills.map((skill, index) => (
+              <div 
+                key={skill.name} 
+                className="skill-item w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
               >
-                <img
-                  src={
-                    skill.logoURL.startsWith("/assets")
-                      ? process.env.PUBLIC_URL + skill.logoURL
-                      : skill.logoURL
-                  }
-                  alt={skill.name}
-                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain mb-2 sm:mb-3 transition-transform duration-300 group-hover:scale-110"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = process.env.PUBLIC_URL + "/assets/default-logo.svg";
-                  }}
-                />
-                <div className="text-sm sm:text-base md:text-lg font-black text-black">
-                  {skill.name}
+                <div
+            className="group relative aspect-square rounded-3xl p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center text-center overflow-hidden border-4 border-black shadow-xl transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-3"
+            style={{ 
+              backgroundColor: categories[activeCategory].color,
+              animationDelay: `${index * 0.1}s`
+            }}
+                >
+            {/* Logo (no white circle) */}
+            <img
+              src={skill.logoURL}
+              alt={skill.name}
+              className="relative z-10 mb-2 sm:mb-3 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
+            />
+
+            {/* Skill name in white pill */}
+                <div className="relative z-10 bg-white px-3 sm:px-4 py-1 sm:py-2 rounded-full border-2 border-black shadow-sm">
+                  <div className="text-xs sm:text-sm md:text-base font-black text-black uppercase">
+                    {skill.name}
+                  </div>
                 </div>
-              </div>
+
+                  </div>
             </div>
           ))}
         </div>
       </div>
 
+       {/* Fun CTA */}
       <div className="mt-20 text-center relative z-10">
-        <div className="inline-block bg-black text-white px-10 py-6 rounded-2xl transform -rotate-1">
+        <div className="inline-block bg-white text-black px-10 py-6 rounded-2xl border-black border-4 shadow-xl transform -rotate-1">
           <p className="text-xl md:text-2xl font-black">
             Animations that make people say "WOW!" ✨
           </p>
         </div>
       </div>
-    </ScrollSection>
+    </div>
   );
 };
 
