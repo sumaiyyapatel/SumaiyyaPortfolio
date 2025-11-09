@@ -1,6 +1,27 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
+// Add keyframe animation for menu items
+const menuAnimation = `
+@keyframes menuFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+`;
+
+// Add the animation to the document
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = menuAnimation;
+  document.head.appendChild(style);
+}
+
 const PlayfulMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -8,6 +29,7 @@ const PlayfulMenu = () => {
     { id: "about", label: "ABOUT", color: "#FFD23F" },
     { id: "work", label: "WORK", color: "#00D4FF" },
     { id: "skills", label: "SKILLS", color: "#FF6B35" },
+    { id: "education", label: "EDUCATION", color: "#06FFA5" },
     { id: "contact", label: "CONTACT", color: "#9D4EDD" },
   ];
 
@@ -15,39 +37,40 @@ const PlayfulMenu = () => {
     setIsOpen(false);
     setTimeout(() => {
       const el = document.getElementById(id);
-      el?.scrollIntoView({ behavior: "smooth" });
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        console.warn(`Section with id "${id}" not found`);
+      }
     }, 300);
   };
 
   return (
     <>
-      {/* Floating toggle button */}
+      {/* Toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-5 sm:top-6 md:top-8 right-5 sm:right-6 md:right-8 
-        z-50 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 
+        className="fixed top-6 right-6 z-50 w-14 h-14 md:w-16 md:h-16 
         bg-black text-white rounded-full flex items-center justify-center 
-        border border-white/70 shadow-xl hover:scale-110 active:scale-95 
-        transition-all duration-300"
+        shadow-xl hover:scale-110 active:scale-95 transition-all duration-300"
       >
         {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
       </button>
 
-      {/* Fullscreen bento grid */}
+      {/* Fullscreen menu */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black text-black flex flex-wrap overflow-hidden"
-        >
+        <div className="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center overflow-hidden">
           {menuItems.map((item, i) => (
             <button
               key={item.id}
               onClick={() => handleItemClick(item.id)}
-              className={`flex-1 flex items-center justify-center 
-              min-w-[50%] sm:min-w-[50%] lg:min-w-[25%] min-h-[50vh] 
-              text-3xl sm:text-5xl md:text-6xl font-extrabold 
-              hover:brightness-110 active:scale-[0.98] transition-all duration-200`}
+              className="w-full flex-1 flex items-center justify-center font-extrabold uppercase tracking-tight text-center transition-all duration-300 hover:scale-[1.02] active:scale-[0.97]"
               style={{
                 backgroundColor: item.color,
+                color: item.id === 'contact' ? "white" : "black",
+                fontSize: item.id === 'education' ? "clamp(1.5rem, 5vw, 3.5rem)" : "clamp(2rem, 6vw, 4rem)",
+                lineHeight: 1.1,
+                animation: `menuFade 0.3s ease-out ${i * 0.1}s both`
               }}
             >
               {item.label}

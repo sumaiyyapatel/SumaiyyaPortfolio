@@ -97,7 +97,7 @@ const PlayfulHero = () => {
     <ScrollSection className="min-h-screen">
       <div ref={heroRef} className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#FFE5B4] via-[#FFD23F] to-[#FF6B35] flex items-center justify-center">
         {/* Custom cursor */}
-        <div 
+        <div
           ref={cursorRef}
           className="fixed w-8 h-8 rounded-full border-4 border-black pointer-events-none z-50 mix-blend-difference"
           style={{ opacity: 0.5 }}
@@ -105,8 +105,8 @@ const PlayfulHero = () => {
 
         {/* Animated grid background */}
         <div className="absolute inset-0 opacity-10">
-          <div 
-            className="absolute inset-0 animate-grid" 
+          <div
+            className="absolute inset-0 animate-grid"
             style={{
               backgroundImage: 'linear-gradient(#000 2px, transparent 2px), linear-gradient(90deg, #000 2px, transparent 2px)',
               backgroundSize: '50px 50px'
@@ -122,7 +122,7 @@ const PlayfulHero = () => {
           <div ref={el => shapesRef.current[2] = el} className="absolute bottom-32 left-1/4 w-48 h-48 border-8 border-[#9D4EDD] rounded-full opacity-60"></div>
           <div ref={el => shapesRef.current[3] = el} className="absolute top-1/3 right-1/3 w-24 h-24 bg-[#06FFA5] rounded-lg rotate-12 opacity-70"></div>
           <div ref={el => shapesRef.current[4] = el} className="absolute bottom-20 right-10 w-44 h-44 border-8 border-[#FFD23F] rotate-45 opacity-60"></div>
-          
+
           {/* Small accent shapes */}
           <div ref={el => shapesRef.current[5] = el} className="absolute top-60 left-1/2 w-16 h-16 bg-white rounded-full opacity-50"></div>
           <div ref={el => shapesRef.current[6] = el} className="absolute bottom-40 left-20 w-20 h-20 bg-black rounded-lg rotate-12 opacity-30"></div>
@@ -181,32 +181,38 @@ const PlayfulHero = () => {
           <div className="relative inline-block mb-8 sm:mb-10 md:mb-12">
             <div className="absolute inset-0 bg-white opacity-20 blur-xl"></div>
             <p className="relative text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-black max-w-3xl mx-auto leading-relaxed px-3 sm:px-4 md:px-6">
-              Making the web <span className="bg-white px-2 sm:px-3 py-0.5 sm:py-1 inline-block rotate-1 shadow-lg">MOVE</span> with 
-              <span className="bg-[#00D4FF] px-2 sm:px-3 py-0.5 sm:py-1 inline-block -rotate-1 ml-1 sm:ml-2 shadow-lg">GSAP</span> + 
-              <span className="bg-[#FF6B35] text-white px-2 sm:px-3 py-0.5 sm:py-1 inline-block rotate-2 ml-1 sm:ml-2 shadow-lg">Three.js</span> + 
+              Making the web <span className="bg-white px-2 sm:px-3 py-0.5 sm:py-1 inline-block rotate-1 shadow-lg">MOVE</span> with
+              <span className="bg-[#00D4FF] px-2 sm:px-3 py-0.5 sm:py-1 inline-block -rotate-1 ml-1 sm:ml-2 shadow-lg">GSAP</span> +
+              <span className="bg-[#FF6B35] text-white px-2 sm:px-3 py-0.5 sm:py-1 inline-block rotate-2 ml-1 sm:ml-2 shadow-lg">Three.js</span> +
               <span className="bg-[#9D4EDD] text-white px-2 sm:px-3 py-0.5 sm:py-1 inline-block -rotate-1 ml-1 sm:ml-2 shadow-lg">React</span>
             </p>
           </div>
 
-          
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center flex-wrap">
-                <button 
-                  onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-black text-white text-lg sm:text-xl md:text-2xl font-black rounded-full hover:scale-105 sm:hover:scale-110 hover:rotate-2 sm:hover:rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
-                >
-                  <span className="relative z-10">SEE MY WORK</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#00D4FF] to-[#9D4EDD] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
-                </button>
-                <a
-                  href={`mailto:${portfolioData.hero.email}`}
-                  className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-white text-black text-lg sm:text-xl md:text-2xl font-black rounded-full border-2 sm:border-3 md:border-4 border-black hover:scale-105 sm:hover:scale-110 hover:-rotate-2 sm:hover:-rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
-                >
-                  <span className="relative z-10">LET'S TALK</span>
-                  <div className="absolute inset-0 bg-[#FFD23F] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
-                </a>
-                </div>
 
-                {/* Animated scroll indicator */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center flex-wrap">
+            <button
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 bg-black text-white text-lg sm:text-xl md:text-2xl font-black rounded-full hover:scale-105 sm:hover:scale-110 hover:rotate-2 sm:hover:rotate-3 transition-all duration-300 shadow-2xl relative overflow-hidden"
+            >
+              <span className="relative z-10">SEE MY WORK</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00D4FF] to-[#9D4EDD] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
+            </button>
+            <a
+              href="https://wa.me/917888000365?text=Hey%20Sumaiyya!%20I%20just%20visited%20your%20portfolio%20and%20would%20love%20to%20connect."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-full sm:w-auto px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 
+              bg-white text-black text-lg sm:text-xl md:text-2xl font-black rounded-full 
+              border-2 sm:border-3 md:border-4 border-black 
+              hover:scale-105 sm:hover:scale-110 hover:-rotate-2 sm:hover:-rotate-3 
+              transition-all duration-300 shadow-2xl relative overflow-hidden"
+            >
+              <span className="relative z-10">LET'S TALK</span>
+              <div className="absolute inset-0 bg-[#25D366] transform scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full"></div>
+            </a>
+          </div>
+
+          {/* Animated scroll indicator */}
           <div className="mt-24 cursor-pointer" onClick={scrollToAbout}>
             <div className="inline-flex flex-col items-center gap-2 animate-bounce">
               <div className="text-black font-bold text-lg">SCROLL</div>

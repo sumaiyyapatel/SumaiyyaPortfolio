@@ -9,6 +9,7 @@ import InteractiveAbout from './components/InteractiveAbout';
 import BoldProjects from './components/BoldProjects';
 import PlayfulSkills from './components/PlayfulSkills';
 import FunContact from './components/FunContact';
+import EducationCertificates from './components/EducationCertificates';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,6 +58,10 @@ function App() {
       
       <div id="skills">
         <PlayfulSkills />
+      </div>
+
+      <div id="education">
+        <EducationCertificates />
       </div>
       
       <div id="contact">
