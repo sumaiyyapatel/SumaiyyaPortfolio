@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/SumaiyyaPortfolio/static/css/main.429564c5.css",
-    "main.js": "/SumaiyyaPortfolio/static/js/main.e0202322.js",
+    "main.css": "/SumaiyyaPortfolio/static/css/main.ea969d6e.css",
+    "main.js": "/SumaiyyaPortfolio/static/js/main.0f13bb0f.js",
     "index.html": "/SumaiyyaPortfolio/index.html",
-    "main.429564c5.css.map": "/SumaiyyaPortfolio/static/css/main.429564c5.css.map",
-    "main.e0202322.js.map": "/SumaiyyaPortfolio/static/js/main.e0202322.js.map"
+    "main.ea969d6e.css.map": "/SumaiyyaPortfolio/static/css/main.ea969d6e.css.map",
+    "main.0f13bb0f.js.map": "/SumaiyyaPortfolio/static/js/main.0f13bb0f.js.map"
   },
   "entrypoints": [
-    "static/css/main.429564c5.css",
-    "static/js/main.e0202322.js"
+    "static/css/main.ea969d6e.css",
+    "static/js/main.0f13bb0f.js"
   ]
 }
