@@ -92,31 +92,83 @@ export const portfolioData = {
   ],
 
   projects: [
-    {
-      id: 1,
-      title: "3D Interactive Portfolio",
-      description: "Built immersive 3D explorable portfolio with smooth camera transitions, hover glow animations, and bloom post-processing, optimized for 60fps.",
-      technologies: ["Three.js", "React Three Fiber", "WebGL", "GSAP"],
-      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop",
-      highlights: ["60fps performance", "Interactive 3D environment", "Advanced post-processing"]
-    },
-    {
-      id: 2,
-      title: "TrackItAll: Student Performance Dashboard",
-      description: "Developed comprehensive dashboard with real-time data visualization and interactive charts for attendance and performance analytics. Collaborated on user-centric wireframes and enhanced UX through iterative feedback.",
-      technologies: ["React.js", "Chart.js", "Django", "Bootstrap"],
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-      highlights: ["Real-time analytics", "Interactive charts", "User-centric design", "Performance tracking"]
-    },
-    {
-      id: 3,
-      title: "Tech-Store: E-commerce Platform",
-      description: "Built a fully responsive e-commerce website optimized for user experience including product filtering, cart management, and checkout flow. Developed accessible web interfaces following modern design principles and FAQ system.",
-      technologies: ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-      highlights: ["Responsive design", "Cart management", "Accessible interfaces", "Modern UI/UX"]
-    }
-  ],
+  {
+    id: 1,
+    title: "3D Interactive Portfolio",
+    description: "Built immersive 3D explorable portfolio with smooth camera transitions, hover glow animations, and bloom post-processing, optimized for 60fps.",
+    technologies: ["Three.js", "React Three Fiber", "WebGL", "GSAP", "Vite"],
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop",
+    screenshots: [
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1619641805634-4c3b7ddf23e8?w=800&h=600&fit=crop"
+    ],
+    highlights: [
+      "60fps performance optimization across all devices",
+      "Interactive 3D environment with physics-based interactions",
+      "Advanced post-processing effects including bloom and depth of field",
+      "Mobile-responsive touch controls",
+      "Custom shader materials for unique visual effects"
+    ],
+    liveUrl: "https://sumaiyyapatel.github.io",
+    githubUrl: "https://github.com/sumaiyyapatel/3d-portfolio",
+    date: "October 2024",
+    team: "Solo Project",
+    category: "3D Web Experience",
+    longDescription: "This project pushes the boundaries of web-based 3D experiences by creating a fully interactive portfolio environment. Built with Three.js and React Three Fiber, it features smooth camera transitions, dynamic lighting, and advanced post-processing effects including bloom and depth of field. The entire experience is optimized to maintain 60fps even on mobile devices through careful asset management and efficient rendering techniques."
+  },
+  {
+    id: 2,
+    title: "TrackItAll: Student Performance Dashboard",
+    description: "Developed comprehensive dashboard with real-time data visualization and interactive charts for attendance and performance analytics.",
+    technologies: ["React.js", "Chart.js", "Django", "Bootstrap", "REST API"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+    screenshots: [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&h=600&fit=crop"
+    ],
+    highlights: [
+      "Real-time analytics with live data updates",
+      "Interactive charts and data visualization using Chart.js",
+      "User-centric design based on iterative feedback",
+      "Performance tracking across multiple metrics",
+      "Responsive dashboard layout for all devices"
+    ],
+    liveUrl: "https://sumaiyyapatel.github.io/TrackitAll-Student/",
+    githubUrl: "https://github.com/sumaiyyapatel/trackitall",
+    date: "August 2024",
+    team: "3-Person Team",
+    category: "Web Application",
+    longDescription: "TrackItAll is a comprehensive student performance management system that provides real-time insights into attendance patterns and academic performance. The dashboard features interactive data visualizations built with Chart.js, allowing educators to quickly identify trends and areas needing attention. Collaborated closely with stakeholders to develop user-centric wireframes and continuously enhanced the UX through iterative feedback cycles. The system handles large datasets efficiently while maintaining a smooth, responsive interface."
+  },
+  {
+    id: 3,
+    title: "Abid Refrigeration & Engineering Pvt. Ltd. Website",
+    disabled: true,
+    description: "Built an animated 5-page React website with GSAP scroll effects, 3D testimonial carousel, and glass morphism UI — transforming their online presence from basic to bold.",
+    technologies: ["React.js", "GSAP", "Firebase", "Framer Motion", "Multi-language support"],
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    screenshots: [
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop"
+    ],
+    highlights: [
+      "GSAP scroll triggered animations enhancing UX",
+      "3D testimonial carousel creating dynamic user engagement",
+      "Glassmorphism design providing modern UI aesthetic",
+      "Custom Firebase CMS with real-time content updates and multilingual support",
+      "Mobile and tablet friendly responsive design"
+    ],
+    liveUrl: "https://abid-refrigeration.com",
+    githubUrl: "https://github.com/sumaiyyapatel/abid-refrigeration-website",
+    date: "Sept 2025 - Oct 2025",
+    team: "Solo Project",
+    category: "Business Website",
+    longDescription: "This project involved developing a visually striking and highly interactive React website for Abid Refrigeration & Engineering Pvt. Ltd. Utilizing GSAP for smooth scroll animations and Framer Motion for engaging transitions, the site features a 3D testimonial carousel and modern glassmorphism UI design. Real-time content management was enabled through a custom Firebase CMS, supporting multilingual content. The site is fully responsive across devices, transforming the client’s web presence from simple to bold."
+  }
+],
 
   skills: {
     languages: [

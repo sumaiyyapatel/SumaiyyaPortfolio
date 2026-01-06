@@ -123,9 +123,11 @@ const WorkSection = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-          {portfolioData.projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
+          {portfolioData.projects
+            .filter((project) => !project.disabled)
+            .map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
         </div>
       </div>
     </ScrollSection>

@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from '../data/mock';
 import { ArrowRight } from 'lucide-react';
 import ScrollSection from './ScrollSection';
+import ProjectModal from './ProjectModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const BoldProjects = () => {
   const contentRef = useRef(null);
   const colors = ['#FF6B35', '#00D4FF', '#9D4EDD', '#06FFA5'];
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const element = contentRef.current;
@@ -63,8 +65,9 @@ const BoldProjects = () => {
                 {/* Project Image */}
                 <div className="w-full md:w-1/2 flex justify-center">
                   <div
-                    className="aspect-video w-full rounded-3xl overflow-hidden border-4 sm:border-8 border-black shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all duration-300"
+                    className="aspect-video w-full rounded-3xl overflow-hidden border-4 sm:border-8 border-black shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all duration-300 cursor-pointer"
                     style={{ backgroundColor: colors[index % colors.length] }}
+                    onClick={() => setSelectedProject(project)}
                   >
                     <img
                       src={project.image}
@@ -103,7 +106,10 @@ const BoldProjects = () => {
                       ))}
                     </div>
 
-                    <button className="flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-black text-white text-base sm:text-xl font-black rounded-full hover:scale-110 transition-all duration-300">
+                    <button 
+                      onClick={() => setSelectedProject(project)}
+                      className="flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-black text-white text-base sm:text-xl font-black rounded-full hover:scale-110 transition-all duration-300"
+                    >
                       VIEW PROJECT
                       <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
@@ -114,6 +120,13 @@ const BoldProjects = () => {
           ))}
         </div>
       </div>
+
+      {/* Project Modal */}
+      <ProjectModal
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        project={selectedProject}
+      />
     </ScrollSection>
   );
 };
