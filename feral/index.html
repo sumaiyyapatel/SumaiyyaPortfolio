@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FERAL — beauty, unsupervised.</title>
+<meta name="description" content="Makeup with a mouth on it. Pigment that bites, formulas that behave — barely." />
+<link rel="icon" href="assets/logo.png" />
+<meta property="og:title" content="FERAL — beauty, unsupervised." />
+<meta property="og:description" content="Makeup with a mouth on it. Pigment that bites, formulas that behave — barely." />
+<meta property="og:image" content="assets/group.png" />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="grain" aria-hidden="true"></div>
+
+<nav class="nav">
+  <a href="#top" class="nav__logo">
+    <img class="nav__mark" src="assets/logo.png" alt="" aria-hidden="true" />
+    FERAL
+  </a>
+  <ul class="nav__links">
+    <li><a href="#arsenal">Shop</a></li>
+    <li><a href="#arsenal">Shades</a></li>
+    <li><a href="#cult">Cult</a></li>
+  </ul>
+  <a href="#" class="nav__cart">Cart (<span id="cart-count">0</span>)</a>
+</nav>
+
+<div id="smooth-wrapper">
+<div id="smooth-content">
+
+  <a id="top"></a>
+
+  <div class="pin-hero" id="pin-hero">
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <p class="kicker" data-speed="1.05"><span class="dot"></span>WARNING: NOT FOR THE CLEAN GIRLS</p>
+
+        <h1 class="headline">
+          <span class="headline-main" data-speed="0.95">FERAL</span>
+          <span class="headline-outline" aria-hidden="true">FERAL</span>
+          <span class="headline-blend" aria-hidden="true">FERAL</span>
+        </h1>
+
+        <p class="sub-headline" data-speed="0.9">Makeup with a mouth on it. Pigment that bites, formulas that behave — barely.</p>
+
+        <div class="hero-actions">
+          <a href="#arsenal" class="btn btn--solid">SHOP THE CHAOS <span aria-hidden="true">→</span></a>
+          <a href="#cult" class="btn btn--outline">START TROUBLE</a>
+        </div>
+      </div>
+
+      <div class="scroll-cue">
+        <span>KEEP GOING</span>
+        <i class="scroll-cue__arrow"></i>
+      </div>
+    </section>
+
+    <div class="hero-blob-layer" aria-hidden="true">
+      <div class="blob blob--acid"></div>
+      <div class="blob blob--pink"></div>
+      <div class="blob blob--outline"></div>
+    </div>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee__track">
+      <span>BEAUTY WITH TEETH&nbsp;&middot;&nbsp;CRUELTY-FREE, CHAOS-FULL&nbsp;&middot;&nbsp;UNSERIOUS&nbsp;&middot;&nbsp;PIGMENT THAT COMMITS&nbsp;&middot;&nbsp;TESTED ON EXES&nbsp;&middot;&nbsp;</span>
+      <span aria-hidden="true">BEAUTY WITH TEETH&nbsp;&middot;&nbsp;CRUELTY-FREE, CHAOS-FULL&nbsp;&middot;&nbsp;UNSERIOUS&nbsp;&middot;&nbsp;PIGMENT THAT COMMITS&nbsp;&middot;&nbsp;TESTED ON EXES&nbsp;&middot;&nbsp;</span>
+    </div>
+  </div>
+
+  <section class="manifesto" id="manifesto">
+    <div class="manifesto__inner">
+      <h2 class="manifesto__title">WHO ASKED?</h2>
+      <p class="manifesto__body" id="manifesto-body">We're the beauty brand your dermatologist warned you about. FERAL makes loud pigment, sharp formulas, and zero apologies — for people who think "your natural beauty" is a threat. No 12-step routine. No "clean girl." No vibes-based marketing about your inner glow. Just colour that shows up, stays put, and dares you to be a little too much. Skincare can relax. This is the fun part.</p>
+    </div>
+  </section>
+
+  <section class="arsenal" id="arsenal">
+    <p class="arsenal__eyebrow">SHOP THE CHAOS</p>
+    <h2 class="arsenal__title">THE ARSENAL</h2>
+
+    <div class="arsenal__lineup">
+      <img src="assets/group.png" alt="The full FERAL lineup: Lip Venom, Cheek Slap, Gloss Riot, and Eye Contact" loading="lazy" />
+    </div>
+
+    <div class="product" data-product="lip-venom">
+      <div class="product__stage">
+        <div class="product__art">
+          <div class="art-glow"></div>
+          <img class="product__photo" src="assets/lip-venom.jpg" alt="FERAL Lip Venom plumping lip oil" loading="lazy" />
+        </div>
+      </div>
+      <div class="product__copy">
+        <span class="product__index">01</span>
+        <h3 class="product__name">LIP VENOM</h3>
+        <p class="product__desc">A lip oil that stains, shines, and refuses to leave. Comes off on your coffee cup, not your dignity.</p>
+        <button class="btn btn--mini" type="button">ADD TO CART</button>
+      </div>
+    </div>
+
+    <div class="video-scrub" id="video-scrub">
+      <video class="video-scrub__video" src="assets/lip-venom.mp4" muted playsinline preload="auto"></video>
+      <div class="video-scrub__overlay"></div>
+      <p class="video-scrub__caption">LIP VENOM — IN MOTION</p>
+    </div>
+
+    <div class="product" data-product="cheek-slap">
+      <div class="product__stage">
+        <div class="product__art">
+          <div class="art-glow"></div>
+          <img class="product__photo" src="assets/cheek-slap.jpg" alt="FERAL Cheek Slap cream blush" loading="lazy" />
+        </div>
+      </div>
+      <div class="product__copy">
+        <span class="product__index">02</span>
+        <h3 class="product__name">CHEEK SLAP</h3>
+        <p class="product__desc">Cream blush with a temper. One tap = flushed. Two = feral. Blend at your own risk.</p>
+        <button class="btn btn--mini" type="button">ADD TO CART</button>
+      </div>
+    </div>
+
+    <div class="product" data-product="gloss-riot">
+      <div class="product__stage">
+        <div class="product__art">
+          <div class="art-glow"></div>
+          <img class="product__photo" src="assets/gloss-riot.jpg" alt="FERAL Gloss Riot high-shine gloss" loading="lazy" />
+        </div>
+      </div>
+      <div class="product__copy">
+        <span class="product__index">03</span>
+        <h3 class="product__name">GLOSS RIOT</h3>
+        <p class="product__desc">High-shine, high-drama, mirror-finish gloss. Non-sticky, fully committed. Wet look, dry humour.</p>
+        <button class="btn btn--mini" type="button">ADD TO CART</button>
+      </div>
+    </div>
+
+    <div class="product" data-product="eye-contact">
+      <div class="product__stage">
+        <div class="product__art">
+          <div class="art-glow"></div>
+          <img class="product__photo" src="assets/eye-contact.jpg" alt="FERAL Eye Contact liquid liner" loading="lazy" />
+        </div>
+      </div>
+      <div class="product__copy">
+        <span class="product__index">04</span>
+        <h3 class="product__name">EYE CONTACT</h3>
+        <p class="product__desc">Liner so sharp it counts as a personality. 24-hour hold for people who don't blink first.</p>
+        <button class="btn btn--mini" type="button">ADD TO CART</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="claims">
+    <div class="claim">
+      <span class="claim__num" data-count="0">0</span>
+      <span class="claim__label">apologies</span>
+    </div>
+    <div class="claim">
+      <span class="claim__num" data-count="100" data-suffix="%">0%</span>
+      <span class="claim__label">vegan</span>
+    </div>
+    <div class="claim">
+      <span class="claim__num" data-count="12" data-suffix="hr">0hr</span>
+      <span class="claim__label">wear</span>
+    </div>
+    <div class="claim">
+      <span class="claim__num claim__num--inf">∞</span>
+      <span class="claim__label">audacity</span>
+    </div>
+  </section>
+
+  <div class="pin-cult" id="pin-cult">
+    <section class="cult" id="cult">
+      <h2 class="cult__title">JOIN THE CULT</h2>
+      <p class="cult__sub">New drops, early access, and zero chill. No spam — just chaos on a schedule.</p>
+      <form class="cult__form" id="cult-form" novalidate>
+        <input type="email" class="cult__input" id="cult-email" placeholder="your@email (we won't be normal about it)" required />
+        <button type="submit" class="btn btn--solid">SIGN UP, SELL OUT <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="cult__confirm" id="cult-confirm" aria-live="polite"></p>
+    </section>
+
+    <div class="cult-blob-layer" aria-hidden="true">
+      <div class="blob blob--acid blob--cult"></div>
+      <div class="blob blob--pink blob--cult2"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p class="site-footer__brand">
+      <img class="footer__mark" src="assets/logo.png" alt="" aria-hidden="true" />
+      FERAL — beauty, unsupervised.
+    </p>
+    <p class="site-footer__meta">Made loud in [city].</p>
+    <p class="site-footer__copy">© 2026 · Don't be weird about it.</p>
+  </footer>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
