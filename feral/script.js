@@ -35,7 +35,11 @@ function init() {
 
 function smoothScroll() {
   const lenis = new Lenis({
-    duration: 1.2,
+    // Longer duration + a gentler quartic ease-out than Lenis's default
+    // (a steep exponential) — each wheel tick glides further and decelerates
+    // more gradually instead of snapping toward the target.
+    duration: 1.7,
+    easing: (t) => 1 - Math.pow(1 - t, 4),
     smoothWheel: true,
   });
 
@@ -282,66 +286,113 @@ function arsenalBuild() {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Video scrub — ties scroll directly to video.currentTime                */
+/* Video scrub — pre-extracts frames to a canvas, scroll picks the        */
+/* nearest one. Native video.currentTime seeking can't keep up with fast  */
+/* scrolling: every seek has to decode forward from the nearest keyframe, */
+/* so a burst of scroll events queues more seeks than the browser can     */
+/* service and the frame visibly lags or freezes. A canvas draw from an   */
+/* already-decoded bitmap is a synchronous array lookup — scroll speed    */
+/* can't outrun it.                                                       */
 /* ---------------------------------------------------------------------- */
 
 function videoScrub() {
-  const section = document.getElementById("video-scrub");
-  const video = section ? section.querySelector("video") : null;
-  if (!section || !video) return;
+  const wrap = document.getElementById("video-scrub-wrap");
+  const video = wrap ? wrap.querySelector(".video-scrub__source") : null;
+  const canvas = wrap ? wrap.querySelector(".video-scrub__canvas") : null;
+  if (!wrap || !video || !canvas) return;
 
   if (REDUCED_MOTION) {
+    video.classList.add("video-scrub__source--visible");
     video.setAttribute("controls", "");
     video.muted = false;
+    canvas.remove();
     return;
   }
 
   video.pause();
 
-  // The pin is created synchronously, same as every other pinned section,
-  // so its spacer exists before init()'s ScrollTrigger.refresh() runs.
-  // Two problems with driving currentTime straight off onUpdate:
-  //
-  // 1. Race condition — if metadata hasn't loaded yet, video.duration is
-  //    NaN and every onUpdate silently no-ops, so scrubbing can do nothing
-  //    for however long the video takes to load.
-  // 2. Choppy seeking — setting currentTime synchronously on every scroll
-  //    tick queues more seeks than the browser can decode, so it stutters.
-  //
-  // Fix: wait for metadata (loadedmetadata / readyState check), then only
-  // ever have one pending seek in flight via requestAnimationFrame — store
-  // the latest scroll progress and let a single rAF loop apply it.
-  let targetProgress = 0;
-  let seekQueued = false;
+  const FRAME_COUNT = 36;
+  const ctx = canvas.getContext("2d");
+  const frames = [];
+  let framesReady = false;
+  let lastDrawnIndex = -1;
 
-  function requestSeek(progress) {
-    targetProgress = progress;
-    if (seekQueued) return;
-    seekQueued = true;
-    requestAnimationFrame(() => {
-      video.currentTime = targetProgress * video.duration;
-      seekQueued = false;
+  function drawFrame(index) {
+    const bitmap = frames[index];
+    if (!bitmap || index === lastDrawnIndex) return;
+    lastDrawnIndex = index;
+    if (canvas.width !== bitmap.width) canvas.width = bitmap.width;
+    if (canvas.height !== bitmap.height) canvas.height = bitmap.height;
+    ctx.drawImage(bitmap, 0, 0);
+  }
+
+  function seekTo(time) {
+    return new Promise((resolve) => {
+      // Setting currentTime to (approximately) where it already is — as
+      // happens for the very first frame, target 0 vs. a fresh video
+      // already at 0 — never fires "seeked" since no seek actually
+      // occurs, which would hang this promise, and the whole extraction
+      // loop, forever.
+      if (Math.abs(video.currentTime - time) < 0.01) {
+        resolve();
+        return;
+      }
+      const onSeeked = () => {
+        clearTimeout(fallback);
+        resolve();
+      };
+      // Also don't trust "seeked" to fire at all in every browser/case —
+      // fall back to resolving anyway so extraction can't stall.
+      const fallback = setTimeout(() => {
+        video.removeEventListener("seeked", onSeeked);
+        resolve();
+      }, 500);
+      video.addEventListener("seeked", onSeeked, { once: true });
+      video.currentTime = time;
     });
   }
 
-  function createScrubTrigger() {
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "+=150%",
-      pin: true,
-      scrub: true,
-      onUpdate: (self) => requestSeek(self.progress),
-    });
-    ScrollTrigger.refresh();
+  async function extractFrames() {
+    const duration = video.duration;
+    for (let i = 0; i < FRAME_COUNT; i++) {
+      const t = Math.min((i / (FRAME_COUNT - 1)) * duration, duration - 0.05);
+      await seekTo(t);
+      frames[i] = await createImageBitmap(video);
+      if (i === 0) drawFrame(0);
+    }
+    framesReady = true;
   }
 
-  if (video.readyState >= 1) {
-    // Metadata (duration) already available.
-    createScrubTrigger();
+  function onceReady() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    extractFrames();
+  }
+
+  // readyState can already be >= 2 (HAVE_CURRENT_DATA) by the time this
+  // runs — e.g. a cached/local file loads faster than init()'s own
+  // fonts.ready wait — in which case "loadeddata" already fired and would
+  // never fire again, so this listener would silently never run.
+  if (video.readyState >= 2) {
+    onceReady();
   } else {
-    video.addEventListener("loadedmetadata", createScrubTrigger, { once: true });
+    video.addEventListener("loadeddata", onceReady, { once: true });
   }
+
+  ScrollTrigger.create({
+    trigger: wrap,
+    start: "top top",
+    end: "bottom bottom",
+    scrub: true,
+    onUpdate: (self) => {
+      // Before extraction finishes, clamp to whichever frames are already
+      // in — still instant, just coarser until the full set lands.
+      const available = framesReady ? FRAME_COUNT : frames.length;
+      if (!available) return;
+      const idx = Math.min(Math.round(self.progress * (FRAME_COUNT - 1)), available - 1);
+      drawFrame(idx);
+    },
+  });
 }
 
 /* ---------------------------------------------------------------------- */

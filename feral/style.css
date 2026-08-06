@@ -511,12 +511,16 @@ html.lenis-smooth {
 .product {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 3rem;
   padding: 4rem var(--edge);
+  border-top: 1px solid rgba(243, 240, 230, 0.08);
+}
+
+.product:first-of-type {
+  border-top: none;
 }
 
 .product:nth-child(even) .product__stage {
@@ -525,8 +529,6 @@ html.lenis-smooth {
 
 .product__stage {
   position: relative;
-  height: 60vh;
-  min-height: 22rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -636,15 +638,46 @@ html.lenis-smooth {
    VIDEO SCRUB
    ========================================================================== */
 
-.video-scrub {
+.video-scrub-wrap {
   position: relative;
+  width: 100%;
+  height: 250vh;
+}
+
+.video-scrub {
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 100vh;
   overflow: hidden;
   background: var(--black);
 }
 
-.video-scrub__video {
+/* Kept in the DOM (off-screen, not display:none) so the browser will
+   still decode frames from it — it's the source frames get captured
+   from, never shown directly. Swapped for a visible, controllable
+   <video> only under prefers-reduced-motion. */
+.video-scrub__source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-scrub__source--visible {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  left: auto;
+  opacity: 1;
+  pointer-events: auto;
+  object-fit: cover;
+}
+
+.video-scrub__canvas {
   position: absolute;
   inset: 0;
   width: 100%;
