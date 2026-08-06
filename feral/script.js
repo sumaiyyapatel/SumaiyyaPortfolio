@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function init() {
-  if (!REDUCED_MOTION) {
+  if (!REDUCED_MOTION && !IS_TOUCH) {
     smoothScroll();
     parallax();
   }
@@ -41,15 +41,6 @@ function smoothScroll() {
     duration: 1.7,
     easing: (t) => 1 - Math.pow(1 - t, 4),
     smoothWheel: true,
-    // syncTouch (running touch drags through the same JS-driven smoothing
-    // as wheel input) was tried here to extend the eased inertia above to
-    // phones, but a real device's native touch scroll is already
-    // hardware-accelerated and smooth on its own — layering a JS
-    // approximation on top of it, on a page doing this much scroll-tied
-    // work (pinned sections, blurred blobs, the video canvas), fights the
-    // OS rather than improving on it and ends up feeling worse. Leaving
-    // syncTouch off (Lenis's default) keeps native touch scrolling
-    // untouched; Lenis still only smooths desktop wheel input.
   });
 
   // Keep ScrollTrigger's positions in sync with Lenis's interpolated
