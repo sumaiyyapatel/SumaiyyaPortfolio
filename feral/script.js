@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function init() {
-  if (!REDUCED_MOTION && !IS_TOUCH) {
+  if (!REDUCED_MOTION) {
     smoothScroll();
     parallax();
   }
@@ -41,6 +41,11 @@ function smoothScroll() {
     duration: 1.7,
     easing: (t) => 1 - Math.pow(1 - t, 4),
     smoothWheel: true,
+    // Without this, Lenis only smooths wheel input and leaves touch
+    // scrolling as plain native 1:1 tracking — phones would get none of
+    // the inertia/easing above. syncTouch runs touch drags through the
+    // same smoothing pipeline as wheel.
+    syncTouch: true,
   });
 
   // Keep ScrollTrigger's positions in sync with Lenis's interpolated
