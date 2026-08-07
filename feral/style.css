@@ -544,6 +544,16 @@ html.lenis-smooth {
 
 .arsenal__lineup img {
   width: 100%;
+  /* Matches the source image (1024x1024). Without this, the box has no
+     height until the lazy-loaded image actually finishes fetching — if
+     that lands after ScrollTrigger has already measured the page (it
+     always does; this image is well below the fold), every pinned
+     section after it (the "JOIN THE CULT" pin) reserves scroll space
+     based on a document that's shorter than it actually is once the
+     image loads and the page grows, so the pin ends up overlapping
+     whatever comes right before it instead of clearing it. */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
   border-radius: 1.5rem;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(243, 240, 230, 0.08);
 }
