@@ -311,19 +311,27 @@ function videoScrub() {
 
   video.pause();
 
-  const FRAME_COUNT = 36;
+  // Fewer frames, captured at a lower resolution than the source. 36
+  // frames at the full 1280x720 would hold ~130MB of decoded pixel data
+  // in memory at once — fine on desktop, a real risk of the browser
+  // silently dropping frames or killing the tab on a weaker phone.
+  const FRAME_COUNT = IS_TOUCH ? 20 : 36;
+  const MAX_FRAME_WIDTH = IS_TOUCH ? 640 : 1280;
+
   const ctx = canvas.getContext("2d");
   const frames = [];
   let framesReady = false;
   let lastDrawnIndex = -1;
+  let frameW = 0;
+  let frameH = 0;
 
   function drawFrame(index) {
-    const bitmap = frames[index];
-    if (!bitmap || index === lastDrawnIndex) return;
+    const frame = frames[index];
+    if (!frame || index === lastDrawnIndex) return;
     lastDrawnIndex = index;
-    if (canvas.width !== bitmap.width) canvas.width = bitmap.width;
-    if (canvas.height !== bitmap.height) canvas.height = bitmap.height;
-    ctx.drawImage(bitmap, 0, 0);
+    if (canvas.width !== frameW) canvas.width = frameW;
+    if (canvas.height !== frameH) canvas.height = frameH;
+    ctx.drawImage(frame, 0, 0);
   }
 
   function seekTo(time) {
@@ -352,21 +360,82 @@ function videoScrub() {
     });
   }
 
+  async function unlockSeeking() {
+    // iOS Safari (and some other mobile browsers) refuse to actually seek
+    // a video — currentTime silently no-ops — until it's been played at
+    // least once. Without this, every seekTo() below "succeeds" (the
+    // fallback timeout resolves it) but never moves off frame 0, so
+    // extraction produces identical frames and scrubbing looks frozen.
+    // A play() immediately followed by pause() satisfies that requirement
+    // without any visible playback.
+    try {
+      await video.play();
+      video.pause();
+    } catch (e) {
+      // Play can be rejected outright (autoplay policy); seeking then
+      // falls back to whatever the browser allows, which is out of our
+      // hands, but this shouldn't block extraction from at least trying.
+    }
+  }
+
+  function captureFrame() {
+    // Draws the video's current frame onto its own small canvas rather
+    // than using createImageBitmap(video) — support for video as an
+    // ImageBitmap source has historically been inconsistent in Safari,
+    // where it can throw or silently produce a blank image. A plain 2D
+    // drawImage() from a <video> element is supported everywhere.
+    const frameCanvas = document.createElement("canvas");
+    frameCanvas.width = frameW;
+    frameCanvas.height = frameH;
+    frameCanvas.getContext("2d").drawImage(video, 0, 0, frameW, frameH);
+    return frameCanvas;
+  }
+
   async function extractFrames() {
+    await unlockSeeking();
     const duration = video.duration;
     for (let i = 0; i < FRAME_COUNT; i++) {
       const t = Math.min((i / (FRAME_COUNT - 1)) * duration, duration - 0.05);
       await seekTo(t);
-      frames[i] = await createImageBitmap(video);
+      frames[i] = captureFrame();
       if (i === 0) drawFrame(0);
     }
+
+    // Some browsers report a "seekable" range that doesn't match what's
+    // actually buffered (observed: buffered covers the whole file, but
+    // seekable stays [0,0]) — every seekTo() above resolves via its
+    // timeout fallback without the seek ever taking effect, so every
+    // captured frame is silently an identical copy of frame 0. That
+    // extraction "succeeds" (nothing throws) but produces a scrub that
+    // never visibly changes. Detect it here: if the video didn't end up
+    // anywhere near the last seek target, seeking isn't working on this
+    // device at all — fall back to native playback instead of shipping a
+    // scrub that looks frozen.
+    if (Math.abs(video.currentTime - (duration - 0.05)) > 1) {
+      frames.length = 0;
+      showFallbackVideo();
+      return;
+    }
+
     framesReady = true;
   }
 
+  function showFallbackVideo() {
+    // Last resort if extraction throws for any reason (unsupported API,
+    // decode error, etc.) — a plain looping video beats a blank canvas.
+    video.classList.add("video-scrub__source--visible");
+    video.loop = true;
+    video.play().catch(() => {});
+    canvas.remove();
+  }
+
   function onceReady() {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    extractFrames();
+    const scale = Math.min(1, MAX_FRAME_WIDTH / video.videoWidth);
+    frameW = Math.round(video.videoWidth * scale);
+    frameH = Math.round(video.videoHeight * scale);
+    canvas.width = frameW;
+    canvas.height = frameH;
+    extractFrames().catch(showFallbackVideo);
   }
 
   // readyState can already be >= 2 (HAVE_CURRENT_DATA) by the time this

@@ -9,8 +9,19 @@
   --pink: #ff2ec4;
   --pink-deep: #ff0a78;
 
-  --font-display: 'Anton', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  /* Extended accent set — each product/claim gets one of these instead of
+     the whole site alternating between just acid and pink, so "loud"
+     reads as rhythm across sections rather than two colors repeating. */
+  --klein: #4100f5;
+  --aqua: #9bf0e1;
+  --tangerine: #ff4632;
+
+  /* Matches the reference system: Unbounded Black for headings, Unbounded
+     Bold for buttons/subheads, Inter for body copy, JetBrains Mono Bold
+     for data/tags/labels (nav links, eyebrows, stat numbers, fine print). */
+  --font-display: 'Unbounded', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
   --edge: clamp(1.25rem, 4vw, 4rem);
 
@@ -32,7 +43,7 @@ html {
 body {
   background: var(--black);
   color: var(--bone);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   overflow-x: hidden;
   cursor: default;
 }
@@ -102,6 +113,7 @@ html.lenis-smooth {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: 1.6rem;
   letter-spacing: 0.04em;
 }
@@ -127,6 +139,8 @@ html.lenis-smooth {
 .nav__links {
   display: flex;
   gap: 2.25rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -153,6 +167,8 @@ html.lenis-smooth {
 }
 
 .nav__cart {
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   border: 1px solid var(--bone);
@@ -209,6 +225,8 @@ html.lenis-smooth {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -234,9 +252,10 @@ html.lenis-smooth {
 .headline {
   position: relative;
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 17vw, 13rem);
-  line-height: 0.85;
-  letter-spacing: 0.01em;
+  font-weight: 900;
+  font-size: clamp(5rem, 19vw, 15rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
 }
 
 .headline-main {
@@ -244,6 +263,10 @@ html.lenis-smooth {
   z-index: 3;
   display: block;
   color: var(--bone);
+  /* Unbounded's rounder letterforms read calmer than Anton's ultra-
+     condensed shout did at the same size — a slight tilt puts some of
+     that off-kilter energy back without fighting the new type system. */
+  transform: rotate(-1.5deg);
 }
 
 .headline-outline,
@@ -252,27 +275,28 @@ html.lenis-smooth {
   inset: 0;
   display: block;
   pointer-events: none;
+  transform: rotate(-1.5deg);
 }
 
 .headline-outline {
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--acid);
-  transform: translate(10px, 10px);
+  -webkit-text-stroke: 2px var(--acid);
+  transform: rotate(-1.5deg) translate(16px, 14px);
   z-index: 1;
 }
 
 .headline-blend {
   color: var(--pink);
   mix-blend-mode: screen;
-  transform: translate(-8px, -6px);
+  transform: rotate(-1.5deg) translate(-13px, -10px);
   z-index: 2;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .sub-headline {
   max-width: 34rem;
   font-size: clamp(0.95rem, 1.6vw, 1.25rem);
-  line-height: 1.5;
+  line-height: 1.6;
   color: rgba(243, 240, 230, 0.8);
 }
 
@@ -285,9 +309,10 @@ html.lenis-smooth {
 }
 
 .btn {
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: 0.8rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
   text-transform: uppercase;
   padding: 0.95rem 1.8rem;
   border-radius: 999px;
@@ -305,7 +330,6 @@ html.lenis-smooth {
 .btn--solid {
   background: var(--acid);
   color: var(--black);
-  font-weight: 700;
 }
 
 .btn--solid:hover {
@@ -346,6 +370,8 @@ html.lenis-smooth {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.65rem;
   letter-spacing: 0.25em;
   color: rgba(243, 240, 230, 0.6);
@@ -430,8 +456,9 @@ html.lenis-smooth {
   display: inline-flex;
   white-space: nowrap;
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(1.1rem, 2.6vw, 1.9rem);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   will-change: transform;
 }
@@ -458,10 +485,14 @@ html.lenis-smooth {
 }
 
 .manifesto__title {
+  display: inline-block;
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: -0.02em;
   margin-bottom: 2rem;
   color: var(--bone);
+  transform: rotate(1deg);
 }
 
 .manifesto__body {
@@ -490,6 +521,8 @@ html.lenis-smooth {
   position: relative;
   z-index: 1;
   text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -502,10 +535,13 @@ html.lenis-smooth {
   z-index: 1;
   text-align: center;
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(2.5rem, 9vw, 6rem);
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--bone);
   margin-bottom: 2.5rem;
+  transform: rotate(-1deg);
 }
 
 .product {
@@ -523,7 +559,12 @@ html.lenis-smooth {
   border-top: none;
 }
 
-.product:nth-child(even) .product__stage {
+/* nth-child(even) doesn't cleanly alternate 1st/2nd/3rd/4th product here —
+   the video-scrub section is a sibling interleaved between them, which
+   throws the odd/even count off (3 of the 4 products land on "even").
+   Selecting by data-product instead alternates by actual product order. */
+.product[data-product="cheek-slap"] .product__stage,
+.product[data-product="eye-contact"] .product__stage {
   order: 2;
 }
 
@@ -577,8 +618,23 @@ html.lenis-smooth {
   will-change: transform, opacity;
 }
 
-.product:nth-child(odd) .art-glow {
-  background: radial-gradient(circle, var(--acid) 0%, transparent 70%);
+/* Each product gets its own accent (rather than just alternating
+   acid/pink) so the arsenal reads as six-ish distinct colors doing
+   rhythm across the page, not two colors repeating four times. */
+.product[data-product="lip-venom"] .art-glow {
+  background: radial-gradient(circle, var(--pink) 0%, transparent 70%);
+}
+
+.product[data-product="cheek-slap"] .art-glow {
+  background: radial-gradient(circle, var(--tangerine) 0%, transparent 70%);
+}
+
+.product[data-product="gloss-riot"] .art-glow {
+  background: radial-gradient(circle, var(--aqua) 0%, transparent 70%);
+}
+
+.product[data-product="eye-contact"] .art-glow {
+  background: radial-gradient(circle, var(--klein) 0%, transparent 70%);
 }
 
 .product__photo {
@@ -598,24 +654,50 @@ html.lenis-smooth {
 
 .product__index {
   display: block;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 1rem;
   color: var(--pink);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   margin-bottom: 0.75rem;
 }
 
+.product[data-product="lip-venom"] .product__index {
+  color: var(--pink);
+}
+
+.product[data-product="cheek-slap"] .product__index {
+  color: var(--tangerine);
+}
+
+.product[data-product="gloss-riot"] .product__index {
+  color: var(--aqua);
+}
+
+.product[data-product="eye-contact"] .product__index {
+  color: var(--klein);
+}
+
 .product__name {
+  display: inline-block;
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(2.4rem, 6vw, 4.5rem);
   line-height: 0.95;
+  letter-spacing: -0.03em;
   margin-bottom: 1.25rem;
 }
+
+.product[data-product="lip-venom"] .product__name,
+.product[data-product="gloss-riot"] .product__name { transform: rotate(-1deg); }
+
+.product[data-product="cheek-slap"] .product__name,
+.product[data-product="eye-contact"] .product__name { transform: rotate(1deg); }
 
 .product__desc {
   max-width: 26rem;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.6;
   color: rgba(243, 240, 230, 0.75);
   margin-bottom: 1.75rem;
 }
@@ -629,7 +711,8 @@ html.lenis-smooth {
     gap: 2rem;
   }
 
-  .product:nth-child(even) .product__stage {
+  .product[data-product="cheek-slap"] .product__stage,
+  .product[data-product="eye-contact"] .product__stage {
     order: 0;
   }
 
@@ -661,6 +744,13 @@ html.lenis-smooth {
   height: 100vh;
   overflow: hidden;
   background: var(--black);
+  /* Some browsers under-prioritize repainting the *contents* of a
+     position:sticky element during scroll, since the element's own
+     on-screen box isn't moving — the canvas frame data updates
+     correctly underneath, but never actually gets composited to the
+     screen. Forcing this onto its own layer keeps it repainting. */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Kept in the DOM (off-screen, not display:none) so the browser will
@@ -693,6 +783,7 @@ html.lenis-smooth {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  will-change: contents;
 }
 
 .video-scrub__overlay {
@@ -707,6 +798,7 @@ html.lenis-smooth {
   left: var(--edge);
   bottom: 2.5rem;
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -738,14 +830,16 @@ html.lenis-smooth {
 
 .claim__num {
   display: block;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: clamp(2rem, 5vw, 3.6rem);
+  letter-spacing: -0.02em;
   color: var(--acid);
 }
 
-.claim:nth-child(2) .claim__num { color: var(--pink); }
-.claim:nth-child(3) .claim__num { color: var(--bone); }
-.claim:nth-child(4) .claim__num { color: var(--acid); }
+.claim:nth-child(2) .claim__num { color: var(--klein); }
+.claim:nth-child(3) .claim__num { color: var(--tangerine); }
+.claim:nth-child(4) .claim__num { color: var(--pink); }
 
 .claim__num--inf {
   font-size: clamp(2.4rem, 6vw, 4.2rem);
@@ -754,6 +848,8 @@ html.lenis-smooth {
 .claim__label {
   display: block;
   margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -798,7 +894,9 @@ html.lenis-smooth {
 
 .cult__title {
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(2.8rem, 9vw, 6.5rem);
+  letter-spacing: -0.03em;
 }
 
 .cult__sub {
@@ -819,7 +917,7 @@ html.lenis-smooth {
 
 .cult__input {
   flex: 1 1 16rem;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.85rem;
   padding: 1rem 1.25rem;
   border-radius: 999px;
@@ -839,6 +937,8 @@ html.lenis-smooth {
 
 .cult__confirm {
   min-height: 1.2rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.8rem;
   color: var(--acid);
   letter-spacing: 0.06em;
@@ -865,6 +965,10 @@ html.lenis-smooth {
   height: min(34vw, 30rem);
   bottom: -6%;
   left: -6%;
+  /* Aquamarine here instead of the .blob--pink base color — the only
+     section of the new accent set not yet used elsewhere, so the closing
+     CTA gets a color beat the rest of the page hasn't shown yet. */
+  background: var(--aqua);
 }
 
 /* ==========================================================================
@@ -879,6 +983,8 @@ html.lenis-smooth {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   color: rgba(243, 240, 230, 0.7);
@@ -890,9 +996,10 @@ html.lenis-smooth {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: 1.1rem;
   color: var(--bone);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
 }
 
 @media (prefers-reduced-motion: reduce) {
