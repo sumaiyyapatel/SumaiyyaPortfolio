@@ -202,6 +202,7 @@ html.lenis-smooth {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -742,15 +743,16 @@ html.lenis-smooth {
   top: 0;
   width: 100%;
   height: 100vh;
+  /* Modern override for 100vh, which on real mobile browsers is measured
+     against the *largest* possible viewport (toolbar hidden) — when the
+     toolbar is actually showing, that leaves the sticky box taller than
+     the true visible area, and everything below the fold within it
+     (here: most of the canvas) renders off-screen as dead space. dvh
+     tracks the toolbar's current state instead. Older browsers that
+     don't recognize dvh simply keep the vh value above. */
+  height: 100dvh;
   overflow: hidden;
   background: var(--black);
-  /* Some browsers under-prioritize repainting the *contents* of a
-     position:sticky element during scroll, since the element's own
-     on-screen box isn't moving — the canvas frame data updates
-     correctly underneath, but never actually gets composited to the
-     screen. Forcing this onto its own layer keeps it repainting. */
-  will-change: transform;
-  transform: translateZ(0);
 }
 
 /* Kept in the DOM (off-screen, not display:none) so the browser will
@@ -782,7 +784,11 @@ html.lenis-smooth {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* No object-fit here — the canvas's pixel buffer is sized in script.js
+     to match this box exactly and each frame is cover-cropped manually
+     before drawing, since object-fit support specifically on <canvas>
+     (as opposed to <img>/<video>) has been inconsistent on some mobile
+     browsers. */
   will-change: contents;
 }
 
@@ -882,6 +888,7 @@ html.lenis-smooth {
   position: relative;
   z-index: 2;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;

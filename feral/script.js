@@ -325,13 +325,48 @@ function videoScrub() {
   let frameW = 0;
   let frameH = 0;
 
+  // The displayed <canvas> is sized to its actual on-screen box (not to
+  // the captured-frame resolution) and drawImage() does the cover-crop
+  // manually, rather than leaning on the CSS `object-fit: cover` that
+  // used to be on this canvas. object-fit support on <canvas> — a
+  // "replaced element" with a raster backing store rather than a normal
+  // image source — has been inconsistent on some mobile browsers; this
+  // sidesteps that entirely.
+  let currentIndex = 0;
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const w = Math.round(rect.width);
+    const h = Math.round(rect.height);
+    if (w === canvas.width && h === canvas.height) return;
+    canvas.width = w;
+    canvas.height = h;
+    lastDrawnIndex = -1; // force a redraw of the current frame at the new size
+    drawFrame(currentIndex);
+  }
+
   function drawFrame(index) {
+    currentIndex = index;
+    if (index === lastDrawnIndex) return;
     const frame = frames[index];
-    if (!frame || index === lastDrawnIndex) return;
+    if (!frame || !canvas.width || !canvas.height) return;
     lastDrawnIndex = index;
-    if (canvas.width !== frameW) canvas.width = frameW;
-    if (canvas.height !== frameH) canvas.height = frameH;
-    ctx.drawImage(frame, 0, 0);
+
+    const canvasRatio = canvas.width / canvas.height;
+    const frameRatio = frame.width / frame.height;
+    let sx, sy, sw, sh;
+    if (frameRatio > canvasRatio) {
+      sh = frame.height;
+      sw = sh * canvasRatio;
+      sx = (frame.width - sw) / 2;
+      sy = 0;
+    } else {
+      sw = frame.width;
+      sh = sw / canvasRatio;
+      sx = 0;
+      sy = (frame.height - sh) / 2;
+    }
+    ctx.drawImage(frame, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
   }
 
   function seekTo(time) {
@@ -423,6 +458,7 @@ function videoScrub() {
   function showFallbackVideo() {
     // Last resort if extraction throws for any reason (unsupported API,
     // decode error, etc.) — a plain looping video beats a blank canvas.
+    window.removeEventListener("resize", resizeCanvas);
     video.classList.add("video-scrub__source--visible");
     video.loop = true;
     video.play().catch(() => {});
@@ -433,8 +469,8 @@ function videoScrub() {
     const scale = Math.min(1, MAX_FRAME_WIDTH / video.videoWidth);
     frameW = Math.round(video.videoWidth * scale);
     frameH = Math.round(video.videoHeight * scale);
-    canvas.width = frameW;
-    canvas.height = frameH;
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
     extractFrames().catch(showFallbackVideo);
   }
 
