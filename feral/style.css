@@ -38,17 +38,23 @@
 html {
   background: var(--black);
   color-scheme: dark;
-  /* overflow-x:hidden on body alone doesn't reliably stop horizontal
-     scroll/pan on real mobile browsers — some govern the pannable area
-     by <html>'s box, not <body>'s. Setting it on both is the standard,
-     actually-reliable fix. */
-  overflow-x: hidden;
 }
 
 body {
   background: var(--black);
   color: var(--bone);
   font-family: var(--font-body);
+  /* Tried also setting this on html for more reliable mobile horizontal-
+     scroll prevention — it backfired: once html has its own explicit
+     overflow, body's overflow-x:hidden stops propagating to the
+     viewport and applies to body as a real element instead, which (via
+     the CSS rule that a mismatched single-axis "hidden" forces the
+     other axis to "auto") turns body into its own independent scroll
+     container. That breaks position:sticky everywhere, since sticky
+     then references body's own (always-zero) internal scroll instead
+     of the real page scroll — confirmed: the video section stopped
+     pinning at all. Back to body-only; horizontal overflow at specific
+     sources (see .marquee-wrap) gets contained locally instead. */
   overflow-x: hidden;
   cursor: default;
 }
@@ -751,6 +757,16 @@ html.lenis-smooth {
   position: relative;
   width: 100%;
   height: 250vh;
+  /* Must stay in the same unit system as .video-scrub's height below —
+     the sticky child releases exactly when this wrap's remaining height
+     runs out (wrap height minus sticky height), and the whole "stays
+     pinned for exactly as long as the scrub takes" design depends on
+     that gap being precisely 150 viewport-heights. Mixing vh here with
+     dvh on the child means that gap only holds when vh and dvh happen
+     to be equal — any device with a toolbar showing (so dvh < vh)
+     shortens the real sticky duration to something less than the scrub
+     needs, releasing the section before scrubbing finishes. */
+  height: 250dvh;
 }
 
 .video-scrub {
