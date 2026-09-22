@@ -755,7 +755,15 @@ html.lenis-smooth {
 
 .video-scrub-wrap {
   position: relative;
-  width: 100%;
+  /* Breaks out of .arsenal's max-width/centering (which keeps product
+     copy readable on huge monitors) back to the full viewport width —
+     this is meant to be an edge-to-edge cinematic moment like the hero
+     and CTA, not constrained body copy. Without this, on any screen
+     wider than --content-max (1440px) the video sits in a box narrower
+     than the viewport, leaving visible black bars on both sides. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   height: 250vh;
   /* Must stay in the same unit system as .video-scrub's height below —
      the sticky child releases exactly when this wrap's remaining height
