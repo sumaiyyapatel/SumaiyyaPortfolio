@@ -38,6 +38,11 @@
 html {
   background: var(--black);
   color-scheme: dark;
+  /* overflow-x:hidden on body alone doesn't reliably stop horizontal
+     scroll/pan on real mobile browsers — some govern the pannable area
+     by <html>'s box, not <body>'s. Setting it on both is the standard,
+     actually-reliable fix. */
+  overflow-x: hidden;
 }
 
 body {
@@ -439,6 +444,16 @@ html.lenis-smooth {
 /* ==========================================================================
    MARQUEE
    ========================================================================== */
+
+/* .marquee itself has overflow:hidden, but that only clips its own
+   *contents* — a rotated + scaled element's bounding box still pokes
+   past the viewport edges regardless, since overflow:hidden on an
+   element doesn't contain that same element's own transform. This
+   untransformed wrapper is what actually clips it. */
+.marquee-wrap {
+  overflow: hidden;
+  width: 100%;
+}
 
 .marquee {
   position: relative;
