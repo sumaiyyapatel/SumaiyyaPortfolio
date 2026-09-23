@@ -3,6 +3,11 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const IS_TOUCH = matchMedia("(hover: none), (pointer: coarse)").matches;
 
+// Set inside smoothScroll() when Lenis is active (desktop, motion allowed)
+// so anchorLinks() can route through it; stays null on touch/reduced-motion,
+// where anchorLinks() falls back to native scrollIntoView instead.
+let lenisInstance = null;
+
 document.addEventListener("DOMContentLoaded", () => {
   document.fonts.ready.then(init);
 });
@@ -13,6 +18,7 @@ function init() {
     parallax();
   }
 
+  anchorLinks();
   heroEntrance();
   heroPinZoom();
   marquee();
@@ -42,6 +48,7 @@ function smoothScroll() {
     easing: (t) => 1 - Math.pow(1 - t, 4),
     smoothWheel: true,
   });
+  lenisInstance = lenis;
 
   // Keep ScrollTrigger's positions in sync with Lenis's interpolated
   // scroll position every frame.
@@ -89,6 +96,34 @@ function parallax() {
         end: "bottom top",
         scrub: true,
       },
+    });
+  });
+}
+
+/* ---------------------------------------------------------------------- */
+/* Anchor links — smooth-scroll nav/CTA links through Lenis instead of    */
+/* the browser's instant native jump, which felt jarring next to how      */
+/* smooth everything else on the page is                                 */
+/* ---------------------------------------------------------------------- */
+
+function anchorLinks() {
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    const id = link.getAttribute("href");
+    // Bare "#" (the cart link) has no real target — document.querySelector
+    // would throw on an empty ID selector, and cartInteractions() already
+    // gives it its own preventDefault + feedback.
+    if (!id || id.length < 2) return;
+
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+
+      if (lenisInstance) {
+        lenisInstance.scrollTo(target, { duration: REDUCED_MOTION ? 0 : 1.5 });
+      } else {
+        target.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth" });
+      }
     });
   });
 }
@@ -466,6 +501,7 @@ function videoScrub() {
   }
 
   function onceReady() {
+    clearTimeout(loadTimeout);
     const scale = Math.min(1, MAX_FRAME_WIDTH / video.videoWidth);
     frameW = Math.round(video.videoWidth * scale);
     frameH = Math.round(video.videoHeight * scale);
@@ -473,6 +509,24 @@ function videoScrub() {
     window.addEventListener("resize", resizeCanvas);
     extractFrames().catch(showFallbackVideo);
   }
+
+  function showLoadFailureFallback() {
+    // Distinct from showFallbackVideo() above: that one assumes the video
+    // itself plays fine and only seeking is the problem. Here the video
+    // hasn't loaded at all (network error, 404, unsupported codec, or it
+    // just never fired a ready event within a reasonable time) — calling
+    // .play() on that would be pointless, so surface native controls
+    // instead, same as the reduced-motion path, in case it's recoverable
+    // (a flaky connection the user can retry) rather than a silent black
+    // box either way.
+    clearTimeout(loadTimeout);
+    video.classList.add("video-scrub__source--visible");
+    video.setAttribute("controls", "");
+    canvas.remove();
+  }
+
+  const loadTimeout = setTimeout(showLoadFailureFallback, 8000);
+  video.addEventListener("error", showLoadFailureFallback, { once: true });
 
   // readyState can already be >= 2 (HAVE_CURRENT_DATA) by the time this
   // runs — e.g. a cached/local file loads faster than init()'s own
@@ -619,5 +673,14 @@ function cartInteractions() {
       gsap.fromTo(cartLink, { scale: 1 }, { scale: 1.15, duration: 0.15, yoyo: true, repeat: 1, ease: "power1.inOut" });
       gsap.fromTo(btn, { y: 0 }, { y: -4, duration: 0.15, yoyo: true, repeat: 1, ease: "power1.inOut" });
     });
+  });
+
+  // Cart is just an href="#" placeholder (no real cart page yet) — left
+  // alone it jumps the page to the top on click, which reads as a broken
+  // link. Suppress that and give a small pulse so the click still feels
+  // like it did something.
+  cartLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    gsap.fromTo(cartLink, { scale: 1 }, { scale: 1.08, duration: 0.12, yoyo: true, repeat: 1, ease: "power1.inOut" });
   });
 }

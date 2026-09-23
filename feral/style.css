@@ -535,6 +535,17 @@ html.lenis-smooth {
 .arsenal {
   position: relative;
   padding-top: 6rem;
+}
+
+/* Holds the max-width/centering that used to live on .arsenal itself —
+   split out so .video-scrub-wrap (a direct child of .arsenal, sitting
+   between the two halves of the product grid) can stay genuinely full-
+   width with plain width:100%, instead of needing a width:100vw +
+   negative-margin breakout hack to escape a constrained parent. That
+   hack also came with a small (~8px) built-in offset on any browser
+   where 100vw doesn't subtract the scrollbar's own width; this avoids
+   the problem entirely rather than compensating for it. */
+.arsenal__inner {
   max-width: var(--content-max);
   margin-inline: auto;
 }
@@ -755,15 +766,10 @@ html.lenis-smooth {
 
 .video-scrub-wrap {
   position: relative;
-  /* Breaks out of .arsenal's max-width/centering (which keeps product
-     copy readable on huge monitors) back to the full viewport width —
-     this is meant to be an edge-to-edge cinematic moment like the hero
-     and CTA, not constrained body copy. Without this, on any screen
-     wider than --content-max (1440px) the video sits in a box narrower
-     than the viewport, leaving visible black bars on both sides. */
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  /* Sits directly in .arsenal (not inside .arsenal__inner), so this is
+     already full viewport width with plain 100% — no vw/margin
+     breakout hack needed. See .arsenal__inner for why. */
+  width: 100%;
   height: 250vh;
   /* Must stay in the same unit system as .video-scrub's height below —
      the sticky child releases exactly when this wrap's remaining height
